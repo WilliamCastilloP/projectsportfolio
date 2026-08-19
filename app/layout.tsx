@@ -66,6 +66,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <a
+          href="#content"
+          className="label sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-200 focus-visible:rounded-full focus-visible:border focus-visible:border-line focus-visible:bg-surface focus-visible:px-4 focus-visible:py-2.5"
+        >
+          Skip to content
+        </a>
         <MotionProvider>
           <Grain />
           <Nav />
