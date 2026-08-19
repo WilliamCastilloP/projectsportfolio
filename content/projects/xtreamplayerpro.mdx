@@ -1,0 +1,51 @@
+---
+title: XtreamPlayerPro
+description: An IPTV client for Xtream Codes portals — playlist parsing, EPG browsing and a keyboard-first player shell.
+year: 2025
+stack:
+  - TypeScript
+  - React
+  - Electron
+  - HLS.js
+cover: /projects/xtreamplayerpro/cover.png
+images:
+  - src: /projects/xtreamplayerpro/guide.png
+    alt: Channel guide with the EPG timeline expanded
+    caption: The guide keeps the current programme pinned while you scroll ahead.
+  - src: /projects/xtreamplayerpro/player.png
+    alt: Player view with the overlay controls visible
+    caption: Overlay controls fade out on idle and return on any key press.
+liveUrl: https://example.com/xtreamplayerpro
+repoUrl: https://github.com/yourhandle/xtreamplayerpro
+featured: true
+order: 1
+---
+
+## Context
+
+Xtream Codes portals expose thousands of channels through a thin JSON API, and
+most clients render that firehose as one endless list. XtreamPlayerPro treats
+the portal as a catalogue instead: everything is grouped, searchable, and
+reachable without leaving the keyboard.
+
+## What I built
+
+- A typed API layer over the Xtream Codes endpoints, so a malformed portal
+  response fails loudly at the boundary rather than halfway through a render.
+- An EPG view that virtualises both axes — channels down, time across — and
+  keeps the current programme anchored while you scroll ahead.
+- A player shell around HLS.js with its own buffering and error states, because
+  the stream quality varies far more than the UI should.
+- Persisted favourites and a resume position per channel, stored locally.
+
+<Note>
+  The portal credentials never leave the machine: everything is requested
+  directly from the client, and nothing is proxied through a server I control.
+</Note>
+
+## Notable details
+
+Channel switching is the interaction that matters most, so it gets the budget:
+the next stream is prepared before the current one is torn down, and the UI
+holds the previous frame until the new one can paint. The result reads as a cut
+rather than a flash of black.
