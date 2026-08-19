@@ -12,17 +12,40 @@ export function Contact() {
 
   useEffect(() => () => clearTimeout(timeout.current), []);
 
+  /** Pre-Clipboard-API path, also the escape hatch when permission is denied. */
+  function copyViaSelection(text: string) {
+    const field = document.createElement("textarea");
+    field.value = text;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.append(field);
+    field.select();
+
+    try {
+      return document.execCommand("copy");
+    } finally {
+      field.remove();
+    }
+  }
+
   async function copyEmail() {
+    let ok = false;
+
     try {
       await navigator.clipboard.writeText(site.email);
-      setCopied(true);
-      clearTimeout(timeout.current);
-      timeout.current = setTimeout(() => setCopied(false), 2000);
+      ok = true;
     } catch {
-      // Clipboard denied (insecure context, or the user said no) — the
-      // mailto link next to the button still works.
-      setCopied(false);
+      ok = copyViaSelection(site.email);
     }
+
+    // If both paths fail the mailto link beside the button still works, so
+    // stay silent rather than claim a copy that didn't happen.
+    if (!ok) return;
+
+    setCopied(true);
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => setCopied(false), 2000);
   }
 
   return (
