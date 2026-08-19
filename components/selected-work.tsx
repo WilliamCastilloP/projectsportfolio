@@ -32,7 +32,7 @@ export async function SelectedWork() {
               delay={index === 0 ? 0 : 0.05}
               amount={0.15}
             >
-              <ProjectCard project={project} index={index + 1} priority={index === 0} />
+              <ProjectCard project={project} index={index + 1} />
             </Reveal>
           ))}
         </div>

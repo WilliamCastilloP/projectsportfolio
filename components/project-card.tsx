@@ -10,14 +10,13 @@ import type { Project } from "@/lib/projects";
 type ProjectCardProps = {
   project: Project;
   index: number;
-  priority?: boolean;
 };
 
 /**
  * Spotlight follows the cursor through two CSS custom properties written
  * straight to the node — no state, no re-render per pointer move.
  */
-export function ProjectCard({ project, index, priority = false }: ProjectCardProps) {
+export function ProjectCard({ project, index }: ProjectCardProps) {
   const cardRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -70,8 +69,7 @@ export function ProjectCard({ project, index, priority = false }: ProjectCardPro
               src={project.cover}
               alt=""
               fill
-              priority={priority}
-              sizes={project.featured ? "(min-width: 640px) 90vw, 100vw" : "(min-width: 640px) 45vw, 100vw"}
+              sizes={project.featured ? "(min-width: 640px) 896px, 100vw" : "(min-width: 640px) 440px, 100vw"}
               className="object-cover object-top opacity-90 transition-[transform,opacity] duration-700 ease-out-expo group-hover:scale-[1.02] group-hover:opacity-100"
             />
             <div

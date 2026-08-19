@@ -15,7 +15,7 @@ export function SectionLabel({
       {index ? (
         <>
           <span className="text-accent">{index}</span>
-          <span aria-hidden className="text-line">
+          <span aria-hidden className="text-faint/60">
             /
           </span>
         </>

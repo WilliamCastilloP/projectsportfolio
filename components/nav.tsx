@@ -30,7 +30,7 @@ export function Nav() {
       >
         <nav
           aria-label="Primary"
-          className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-6 px-5 sm:px-8"
+          className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-5 sm:gap-6 sm:px-8"
         >
           <Link
             href="/"
@@ -40,7 +40,7 @@ export function Nav() {
             {site.name}
           </Link>
 
-          <ul className="flex items-center gap-5 sm:gap-7">
+          <ul className="flex items-center gap-4 sm:gap-7">
             {site.nav.map((item) => (
               <li key={item.href}>
                 <Link

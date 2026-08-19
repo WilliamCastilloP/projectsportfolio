@@ -37,7 +37,7 @@ export const site = {
 
   hero: {
     /** Rendered one line per array entry, revealed in sequence. */
-    headline: ["Building calm interfaces", "for loud problems."],
+    headline: ["Calm interfaces", "for loud problems."],
     intro:
       "I design and ship web products end to end — from the data model to the last easing curve.",
   },
