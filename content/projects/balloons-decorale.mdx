@@ -1,0 +1,47 @@
+---
+title: Balloons Decorale 2.0
+description: A rebuild of a balloon-decor studio's site around a visual catalogue and a quote request that actually reaches the inbox.
+year: 2025
+stack:
+  - Next.js
+  - TypeScript
+  - Tailwind CSS
+  - Resend
+cover: /projects/balloons-decorale/cover.png
+images:
+  - src: /projects/balloons-decorale/catalogue.png
+    alt: Catalogue grid filtered by event type
+    caption: Filtering by event type rewrites the URL, so a filtered view is shareable.
+  - src: /projects/balloons-decorale/quote.png
+    alt: Multi-step quote request form
+    caption: The quote form saves as you go and validates on the server.
+liveUrl: https://example.com/balloons-decorale
+repoUrl: https://github.com/yourhandle/balloons-decorale
+featured: false
+order: 2
+---
+
+## Context
+
+The first version of the site was a gallery with a contact link, which meant
+every enquiry arrived as a blank email. Version 2.0 reorganises the work around
+the two questions clients actually ask: *what can this look like* and *what
+would it cost*.
+
+## What I built
+
+- A catalogue where each setup carries its event type, palette and scale, so
+  the grid can be filtered without loading a new page.
+- A quote request that collects event date, venue and budget range in steps,
+  keeps its state if the tab is closed, and re-validates everything server-side
+  before it sends.
+- Transactional email through Resend, with a plain-text copy to the client so
+  the enquiry exists in both inboxes.
+- Image handling tuned for photography: AVIF first, sized per breakpoint, and
+  never larger than the layout needs.
+
+## Notable details
+
+Colour is the whole product here, so the site gets out of the way — a neutral
+shell, generous whitespace, and no interface chrome competing with the
+photographs.

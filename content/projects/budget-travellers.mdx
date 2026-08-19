@@ -1,0 +1,50 @@
+---
+title: Budget-Travellers
+description: A shared trip budget for people who split costs unevenly — multi-currency entries, per-person balances, and a settle-up that ends the argument.
+year: 2024
+stack:
+  - Next.js
+  - PostgreSQL
+  - Drizzle ORM
+  - Zod
+cover: /projects/budget-travellers/cover.png
+images:
+  - src: /projects/budget-travellers/ledger.png
+    alt: Trip ledger grouped by day
+    caption: Entries group by day and convert to the trip's base currency.
+  - src: /projects/budget-travellers/settle.png
+    alt: Settle-up screen showing who owes whom
+    caption: Settle-up reduces the graph to the fewest possible transfers.
+liveUrl: https://example.com/budget-travellers
+repoUrl: https://github.com/yourhandle/budget-travellers
+featured: false
+order: 3
+---
+
+## Context
+
+Splitting a trip evenly is easy. Splitting it when one person books the flights,
+another pays for a week of groceries in a different currency, and a third joins
+halfway through is where every shared spreadsheet falls apart.
+
+## What I built
+
+- A ledger where an expense records who paid, who it covers, and the rate at the
+  time it was entered — the rate is stored, not recalculated, so history stays
+  stable.
+- Balances derived from the ledger rather than stored, which means an edit or a
+  deletion can never leave the totals inconsistent.
+- A settle-up step that reduces the debt graph to the smallest set of transfers.
+- Offline-tolerant entry: expenses queue locally and sync when the connection
+  comes back, which is the normal state of affairs abroad.
+
+<Note>
+  Every mutation goes through a Zod schema shared by the client form and the
+  server action, so the two can't drift.
+</Note>
+
+## Notable details
+
+The hard part was never the maths — it was making the maths legible. Each
+balance links back to the exact entries that produced it, so anyone can audit
+their own number instead of trusting the total.
