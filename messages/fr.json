@@ -1,0 +1,155 @@
+{
+  "nav": {
+    "work": "Projets",
+    "services": "Services",
+    "process": "Processus",
+    "about": "À propos",
+    "startProject": "Démarrer un projet",
+    "aria": "Principal",
+    "home": "Accueil",
+    "menu": "Menu",
+    "close": "Fermer"
+  },
+  "footer": {
+    "nav": "Navigation",
+    "social": "Réseaux",
+    "ctaLabel": "Discutons",
+    "ctaTitle": "Un projet en tête ?",
+    "ctaButton": "Démarrer un projet",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "cookies": "Cookies",
+    "links": {
+      "work": "Projets",
+      "services": "Services",
+      "process": "Processus",
+      "about": "À propos"
+    }
+  },
+  "a11y": { "skip": "Aller au contenu" },
+  "locale": {
+    "es": "ES",
+    "en": "EN",
+    "fr": "FR",
+    "label": "Langue"
+  },
+  "languageModal": {
+    "title": "Choisissez votre langue",
+    "subtitle": "Sélectionnez votre langue préférée pour continuer.",
+    "close": "Fermer",
+    "skip": "Continuer avec la langue suggérée",
+    "es": "Español",
+    "en": "English",
+    "fr": "Français",
+    "flag": { "es": "🇪🇸", "en": "🇬🇧", "fr": "🇫🇷" },
+    "greeting": { "es": "Hola", "en": "Hello", "fr": "Bonjour" }
+  },
+  "home": {
+    "startProject": "Démarrer un projet",
+    "seeWork": "Voir nos projets",
+    "scroll": "Faites défiler pour explorer",
+    "exploreServices": "Voir tous les services",
+    "learnMore": "En savoir plus",
+    "viewAll": "Voir tous les projets",
+    "viewCase": "Voir l'étude de cas"
+  },
+  "services": {
+    "start": "Démarrer un projet",
+    "learnMore": "En savoir plus",
+    "fallbackTitle": "Tout ce qu'il faut pour exister",
+    "fallbackEmphasis": "en ligne.",
+    "fallbackIntro": "De la stratégie et du design au développement et au lancement — nous gérons tout le parcours."
+  },
+  "work": {
+    "eyebrow": "Nos projets",
+    "headline": "Des sites web qui aident les entreprises à",
+    "headlineEmphasis": "grandir.",
+    "intro": "Une sélection de sites et e-commerce sur mesure que nous avons conçus et développés pour des clients de différents secteurs.",
+    "all": "Projets",
+    "empty": "Aucun projet publié pour le moment.",
+    "viewProject": "Voir le projet",
+    "back": "Retour aux projets",
+    "client": "Client",
+    "industry": "Secteur",
+    "services": "Services",
+    "platform": "Plateforme",
+    "year": "Année",
+    "live": "Visiter le site",
+    "overview": "Contexte",
+    "solution": "La solution",
+    "keyPages": "Pages clés",
+    "keyPagesTitle": "Une expérience claire et cohérente",
+    "filter": {
+      "all": "Tous",
+      "website": "Sites web",
+      "ecommerce": "E-commerce",
+      "landing": "Landing pages",
+      "branding": "Branding"
+    }
+  },
+  "about": {
+    "start": "Démarrer un projet",
+    "fallbackIntro": "Nous concevons et développons des sites web et e-commerce sur mesure pour les entreprises qui veulent grandir en ligne.",
+    "founderTitle": "Design, tech et stratégie — au même endroit.",
+    "values": "Nos valeurs",
+    "numbersEyebrow": "Quelques chiffres",
+    "numbersTitle": "L'impact derrière le travail"
+  },
+  "cta": {
+    "eyebrow": "Travaillons ensemble",
+    "title": "Un projet en tête ?",
+    "body": "Construisons quelque chose d'excellent ensemble.",
+    "button": "Démarrer un projet"
+  },
+  "start": {
+    "metaTitle": "Démarrer un projet",
+    "eyebrow": "Travaillons ensemble",
+    "title": "Un projet en tête ?",
+    "intro": "Parlez-nous de votre projet. Nous examinerons votre brief et répondrons avec des étapes claires.",
+    "benefit1Title": "Approche sur mesure",
+    "benefit1Body": "Chaque projet est unique. Nous adaptons notre processus à vos objectifs.",
+    "benefit2Title": "Prochaines étapes claires",
+    "benefit2Body": "Vous recevrez une réponse réfléchie et un plan.",
+    "benefit3Title": "Expérience collaborative",
+    "benefit3Body": "Nous restons impliqués du kickoff au lancement et au-delà.",
+    "steps": { "1": "Projet", "2": "Détails", "3": "Contact" },
+    "q1": "Que construisons-nous ?",
+    "q2": "À quelle étape êtes-vous ?",
+    "q3": "Quand souhaitez-vous commencer ?",
+    "q4": "Vos coordonnées",
+    "projectType": {
+      "new-website": "Nouveau site",
+      "redesign": "Refonte",
+      "ecommerce": "E-commerce",
+      "other": "Autre"
+    },
+    "stage": {
+      "idea": "Juste une idée",
+      "ready": "Prêt à commencer",
+      "existing": "Site existant"
+    },
+    "timelinePlaceholder": "Sélectionnez un délai",
+    "timeline": {
+      "asap": "Dès que possible",
+      "1-3": "Dans 1–3 mois",
+      "3-6": "Dans 3–6 mois",
+      "6plus": "Dans plus de 6 mois"
+    },
+    "name": "Nom complet",
+    "email": "Adresse e-mail",
+    "company": "Entreprise (optionnel)",
+    "description": "Parlez-nous de votre projet",
+    "back": "Retour",
+    "continue": "Continuer",
+    "submit": "Envoyer le projet",
+    "error": "Une erreur s'est produite. Réessayez.",
+    "successTitle": "Projet envoyé",
+    "successBody": "Merci — nous avons reçu votre brief et répondrons bientôt par e-mail."
+  },
+  "notFound": {
+    "label": "Introuvable",
+    "title": "Cette page n'existe pas.",
+    "body": "Le lien est peut-être expiré ou la page a été déplacée.",
+    "back": "Retour à l'accueil"
+  }
+}

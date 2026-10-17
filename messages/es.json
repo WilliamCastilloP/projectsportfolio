@@ -1,0 +1,155 @@
+{
+  "nav": {
+    "work": "Trabajo",
+    "services": "Servicios",
+    "process": "Proceso",
+    "about": "Nosotros",
+    "startProject": "Empezar un proyecto",
+    "aria": "Principal",
+    "home": "Inicio",
+    "menu": "Menú",
+    "close": "Cerrar"
+  },
+  "footer": {
+    "nav": "Navegación",
+    "social": "Redes",
+    "ctaLabel": "Hablemos",
+    "ctaTitle": "¿Tienes un proyecto en mente?",
+    "ctaButton": "Empezar un proyecto",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "cookies": "Cookies",
+    "links": {
+      "work": "Trabajo",
+      "services": "Servicios",
+      "process": "Proceso",
+      "about": "Nosotros"
+    }
+  },
+  "a11y": { "skip": "Saltar al contenido" },
+  "locale": {
+    "es": "ES",
+    "en": "EN",
+    "fr": "FR",
+    "label": "Idioma"
+  },
+  "languageModal": {
+    "title": "Elige tu idioma",
+    "subtitle": "Selecciona tu idioma preferido para continuar.",
+    "close": "Cerrar",
+    "skip": "Continuar con el idioma sugerido",
+    "es": "Español",
+    "en": "English",
+    "fr": "Français",
+    "flag": { "es": "🇪🇸", "en": "🇬🇧", "fr": "🇫🇷" },
+    "greeting": { "es": "Hola", "en": "Hello", "fr": "Bonjour" }
+  },
+  "home": {
+    "startProject": "Empezar un proyecto",
+    "seeWork": "Ver nuestro trabajo",
+    "scroll": "Desplázate para explorar",
+    "exploreServices": "Ver todos los servicios",
+    "learnMore": "Saber más",
+    "viewAll": "Ver todos los proyectos",
+    "viewCase": "Ver el caso"
+  },
+  "services": {
+    "start": "Empezar un proyecto",
+    "learnMore": "Saber más",
+    "fallbackTitle": "Todo lo que necesitas para",
+    "fallbackEmphasis": "mostrarte online.",
+    "fallbackIntro": "De la estrategia y el diseño al desarrollo y el lanzamiento — cubrimos todo el camino."
+  },
+  "work": {
+    "eyebrow": "Nuestro trabajo",
+    "headline": "Sitios web que ayudan a los negocios a",
+    "headlineEmphasis": "crecer.",
+    "intro": "Una selección de sitios y e-commerce a medida que hemos diseñado y construido para clientes de distintos sectores.",
+    "all": "Trabajo",
+    "empty": "Aún no hay trabajo publicado.",
+    "viewProject": "Ver proyecto",
+    "back": "Volver a todos los proyectos",
+    "client": "Cliente",
+    "industry": "Industria",
+    "services": "Servicios",
+    "platform": "Plataforma",
+    "year": "Año",
+    "live": "Visitar sitio",
+    "overview": "Contexto",
+    "solution": "La solución",
+    "keyPages": "Páginas clave",
+    "keyPagesTitle": "Una experiencia clara y coherente",
+    "filter": {
+      "all": "Todos",
+      "website": "Sitios web",
+      "ecommerce": "E-commerce",
+      "landing": "Landing pages",
+      "branding": "Branding"
+    }
+  },
+  "about": {
+    "start": "Empezar un proyecto",
+    "fallbackIntro": "Diseñamos y desarrollamos sitios web y e-commerce a medida para empresas que quieren crecer en línea.",
+    "founderTitle": "Diseño, tecnología y estrategia — en un solo lugar.",
+    "values": "Nuestros valores",
+    "numbersEyebrow": "Algunos números",
+    "numbersTitle": "El impacto detrás del trabajo"
+  },
+  "cta": {
+    "eyebrow": "Trabajemos juntos",
+    "title": "¿Tienes un proyecto en mente?",
+    "body": "Construyamos algo excelente juntos.",
+    "button": "Empezar un proyecto"
+  },
+  "start": {
+    "metaTitle": "Empezar un proyecto",
+    "eyebrow": "Trabajemos juntos",
+    "title": "¿Tienes un proyecto en mente?",
+    "intro": "Cuéntanos tu proyecto. Revisaremos tu brief y responderemos con pasos claros.",
+    "benefit1Title": "Enfoque a medida",
+    "benefit1Body": "Cada proyecto es único. Adaptamos el proceso a tus objetivos.",
+    "benefit2Title": "Próximos pasos claros",
+    "benefit2Body": "Recibirás una respuesta con un plan concreto.",
+    "benefit3Title": "Experiencia colaborativa",
+    "benefit3Body": "Acompañamos desde el inicio hasta el lanzamiento y más allá.",
+    "steps": { "1": "Proyecto", "2": "Detalles", "3": "Contacto" },
+    "q1": "¿Qué vamos a construir?",
+    "q2": "¿En qué etapa estás?",
+    "q3": "¿Cuándo te gustaría empezar?",
+    "q4": "Tus datos",
+    "projectType": {
+      "new-website": "Sitio nuevo",
+      "redesign": "Rediseño",
+      "ecommerce": "E-commerce",
+      "other": "Otra cosa"
+    },
+    "stage": {
+      "idea": "Solo una idea",
+      "ready": "Listo para empezar",
+      "existing": "Sitio existente"
+    },
+    "timelinePlaceholder": "Selecciona un plazo",
+    "timeline": {
+      "asap": "Lo antes posible",
+      "1-3": "En 1–3 meses",
+      "3-6": "En 3–6 meses",
+      "6plus": "En más de 6 meses"
+    },
+    "name": "Nombre completo",
+    "email": "Correo electrónico",
+    "company": "Empresa (opcional)",
+    "description": "Cuéntanos sobre tu proyecto",
+    "back": "Atrás",
+    "continue": "Continuar",
+    "submit": "Enviar proyecto",
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "successTitle": "Proyecto enviado",
+    "successBody": "Gracias — recibimos tu brief y responderemos pronto por correo."
+  },
+  "notFound": {
+    "label": "No encontrada",
+    "title": "Esta página no existe.",
+    "body": "El enlace puede estar vencido o la página se movió.",
+    "back": "Volver al inicio"
+  }
+}

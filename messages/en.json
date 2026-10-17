@@ -1,0 +1,155 @@
+{
+  "nav": {
+    "work": "Work",
+    "services": "Services",
+    "process": "Process",
+    "about": "About",
+    "startProject": "Start a project",
+    "aria": "Primary",
+    "home": "Home",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "footer": {
+    "nav": "Navigation",
+    "social": "Connect",
+    "ctaLabel": "Let's talk",
+    "ctaTitle": "Have a project in mind?",
+    "ctaButton": "Start a project",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "cookies": "Cookies",
+    "links": {
+      "work": "Work",
+      "services": "Services",
+      "process": "Process",
+      "about": "About"
+    }
+  },
+  "a11y": { "skip": "Skip to content" },
+  "locale": {
+    "es": "ES",
+    "en": "EN",
+    "fr": "FR",
+    "label": "Language"
+  },
+  "languageModal": {
+    "title": "Choose your language",
+    "subtitle": "Please select your preferred language to continue.",
+    "close": "Close",
+    "skip": "Continue with suggested language",
+    "es": "Español",
+    "en": "English",
+    "fr": "Français",
+    "flag": { "es": "🇪🇸", "en": "🇬🇧", "fr": "🇫🇷" },
+    "greeting": { "es": "Hola", "en": "Hello", "fr": "Bonjour" }
+  },
+  "home": {
+    "startProject": "Start a project",
+    "seeWork": "See our work",
+    "scroll": "Scroll to explore",
+    "exploreServices": "Explore all services",
+    "learnMore": "Learn more",
+    "viewAll": "View all projects",
+    "viewCase": "View case study"
+  },
+  "services": {
+    "start": "Start a project",
+    "learnMore": "Learn more",
+    "fallbackTitle": "Everything you need to show up",
+    "fallbackEmphasis": "online.",
+    "fallbackIntro": "From strategy and design to development and launch — we handle the full journey."
+  },
+  "work": {
+    "eyebrow": "Our work",
+    "headline": "Websites that help businesses",
+    "headlineEmphasis": "grow.",
+    "intro": "A selection of custom websites and e-commerce projects we've designed and built for clients across industries.",
+    "all": "Work",
+    "empty": "No published work yet.",
+    "viewProject": "View project",
+    "back": "Back to all projects",
+    "client": "Client",
+    "industry": "Industry",
+    "services": "Services",
+    "platform": "Platform",
+    "year": "Year",
+    "live": "Visit website",
+    "overview": "Overview",
+    "solution": "The solution",
+    "keyPages": "Key pages",
+    "keyPagesTitle": "A clean and cohesive experience",
+    "filter": {
+      "all": "All",
+      "website": "Websites",
+      "ecommerce": "E-commerce",
+      "landing": "Landing pages",
+      "branding": "Branding"
+    }
+  },
+  "about": {
+    "start": "Start a project",
+    "fallbackIntro": "We design and build custom websites and e-commerce platforms for businesses that want to grow online.",
+    "founderTitle": "Design, tech and strategy — all in one place.",
+    "values": "Our values",
+    "numbersEyebrow": "A few numbers",
+    "numbersTitle": "The impact behind the work"
+  },
+  "cta": {
+    "eyebrow": "Let's work together",
+    "title": "Have a project in mind?",
+    "body": "Let's build something great together.",
+    "button": "Start a project"
+  },
+  "start": {
+    "metaTitle": "Start a project",
+    "eyebrow": "Let's work together",
+    "title": "Have a project in mind?",
+    "intro": "Tell us about your project. We'll review your brief and reply with clear next steps.",
+    "benefit1Title": "A tailored approach",
+    "benefit1Body": "Every project is unique. We adapt our process to your goals.",
+    "benefit2Title": "Clear next steps",
+    "benefit2Body": "You'll hear back with a thoughtful response and a plan.",
+    "benefit3Title": "A collaborative experience",
+    "benefit3Body": "We stay involved from kickoff through launch and beyond.",
+    "steps": { "1": "Project", "2": "Details", "3": "Contact" },
+    "q1": "What are we building?",
+    "q2": "What stage are you at?",
+    "q3": "When would you like to get started?",
+    "q4": "Your details",
+    "projectType": {
+      "new-website": "New website",
+      "redesign": "Redesign",
+      "ecommerce": "E-commerce",
+      "other": "Something else"
+    },
+    "stage": {
+      "idea": "Just an idea",
+      "ready": "Ready to start",
+      "existing": "Existing website"
+    },
+    "timelinePlaceholder": "Select a timeframe",
+    "timeline": {
+      "asap": "As soon as possible",
+      "1-3": "In 1–3 months",
+      "3-6": "In 3–6 months",
+      "6plus": "In 6+ months"
+    },
+    "name": "Full name",
+    "email": "Email address",
+    "company": "Company (optional)",
+    "description": "Tell us about your project",
+    "back": "Back",
+    "continue": "Continue",
+    "submit": "Send project",
+    "error": "Something went wrong. Please try again.",
+    "successTitle": "Project sent",
+    "successBody": "Thanks — we received your brief and will reply by email soon."
+  },
+  "notFound": {
+    "label": "Not found",
+    "title": "This page doesn't exist.",
+    "body": "The link may be out of date, or the page moved.",
+    "back": "Back home"
+  }
+}

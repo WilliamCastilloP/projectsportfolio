@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-footer: var(--footer-bg);
+  --color-footer-fg: var(--footer-fg);
+
+  --text-display: clamp(2.5rem, 6vw, 4.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-title: clamp(2rem, 4vw, 3.25rem);
+  --text-title--line-height: 1.08;
+  --text-title--letter-spacing: -0.02em;
+
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.12em;
+
+  --radius-shell: 2rem;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --bg: #faf8f5;
+    --surface: #ffffff;
+    --elevated: #f3f0eb;
+    --fg: #111111;
+    --muted: #5c5a56;
+    --faint: #8a8680;
+    --line: #e8e4dd;
+    --footer-bg: #0a0a0a;
+    --footer-fg: #f5f5f5;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--footer-bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: #111;
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 3px;
+  }
+}
+
+@utility label {
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility serif-display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+}
+
+@utility btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-fg px-6 py-3 text-sm font-medium text-surface transition-colors duration-200 hover:bg-[#2a2a2a];
+}
+
+@utility btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-6 py-3 text-sm font-medium text-fg transition-colors duration-200 hover:border-fg/30 hover:bg-elevated;
+}
+
+@layer components {
+  .site-shell {
+    position: relative;
+    z-index: 2;
+    min-height: 100svh;
+    margin-bottom: var(--footer-height, 28rem);
+    background: var(--bg);
+    border-bottom-left-radius: var(--radius-shell);
+    border-bottom-right-radius: var(--radius-shell);
+    box-shadow: 0 28px 80px rgb(0 0 0 / 22%);
+  }
+
+  .site-footer-fixed {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+  }
+
+  .nav-link {
+    @apply relative text-sm text-muted transition-colors duration-200 hover:text-fg;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s var(--ease-out-expo);
+  }
+
+  .nav-link:hover::after,
+  .nav-link[data-active="true"]::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link[data-active="true"] {
+    @apply text-fg;
+  }
+
+  .rich-text {
+    @apply space-y-4 text-muted leading-relaxed;
+  }
+
+  .rich-text h2 {
+    @apply serif-display mt-8 text-2xl text-fg;
+  }
+
+  .rich-text h3 {
+    @apply mt-6 text-lg font-medium text-fg;
+  }
+
+  .rich-text ul {
+    @apply list-disc space-y-2 pl-5;
+  }
+}
+
+@keyframes nav-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
