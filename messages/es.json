@@ -47,6 +47,13 @@
   "home": {
     "startProject": "Empezar un proyecto",
     "seeWork": "Ver nuestro trabajo",
+    "hero": {
+      "palette": "Paleta",
+      "typography": "Tipografía",
+      "stickyNote": "Más aire aquí",
+      "scrollIndicator": "Desplázate para explorar",
+      "availabilityDefault": "Aceptando nuevos proyectos"
+    },
     "scroll": "Desplázate para explorar",
     "exploreServices": "Ver todos los servicios",
     "learnMore": "Saber más",

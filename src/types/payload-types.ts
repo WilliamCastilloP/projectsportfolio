@@ -683,6 +683,8 @@ export interface HomePage {
     emphasis?: string | null;
   };
   intro?: string | null;
+  showAvailability?: boolean | null;
+  availabilityLabel?: string | null;
   floatingNotes?:
     | {
         text: string;
@@ -866,6 +868,8 @@ export interface HomePageSelect<T extends boolean = true> {
         emphasis?: T;
       };
   intro?: T;
+  showAvailability?: T;
+  availabilityLabel?: T;
   floatingNotes?:
     | T
     | {

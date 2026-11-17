@@ -21,6 +21,18 @@ export const HomePage: GlobalConfig = {
     },
     { name: "intro", type: "textarea", localized: true, label: "Intro" },
     {
+      name: "showAvailability",
+      type: "checkbox",
+      label: "Mostrar pastilla de disponibilidad",
+      defaultValue: false,
+    },
+    {
+      name: "availabilityLabel",
+      type: "text",
+      label: "Texto de disponibilidad",
+      localized: true,
+    },
+    {
       name: "floatingNotes",
       type: "array",
       label: "Notas flotantes",

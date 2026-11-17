@@ -15,6 +15,8 @@ export type HomeContent = {
   headlineLines: string[];
   headlineEmphasis: string;
   intro: string;
+  showAvailability: boolean;
+  availabilityLabel: string;
   floatingNotes: string[];
   servicesTeaser: { eyebrow: string; title: string; emphasis: string };
   workTeaser: { eyebrow: string; title: string; emphasis: string };

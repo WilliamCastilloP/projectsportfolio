@@ -87,6 +87,8 @@ const homeFallback: Record<Locale, HomeContent> = {
     headlineEmphasis: "crecer.",
     intro:
       "WC Digital diseña y desarrolla sitios web a medida para empresas que quieren vender más y operar mejor en línea.",
+    showAvailability: true,
+    availabilityLabel: "Aceptando nuevos proyectos",
     floatingNotes: ["Ideas", "Diseño", "Desarrollo", "Lanzamiento"],
     servicesTeaser: {
       eyebrow: "SERVICIOS",
@@ -105,6 +107,8 @@ const homeFallback: Record<Locale, HomeContent> = {
     headlineEmphasis: "grow.",
     intro:
       "WC Digital designs and builds custom websites for businesses that want to sell more and run better online.",
+    showAvailability: true,
+    availabilityLabel: "Accepting new projects",
     floatingNotes: ["Ideas", "Design", "Develop", "Launch"],
     servicesTeaser: {
       eyebrow: "SERVICES",
@@ -123,6 +127,8 @@ const homeFallback: Record<Locale, HomeContent> = {
     headlineEmphasis: "grandir.",
     intro:
       "WC Digital conçoit et développe des sites sur mesure pour les entreprises qui veulent vendre plus et mieux en ligne.",
+    showAvailability: true,
+    availabilityLabel: "Nous acceptons de nouveaux projets",
     floatingNotes: ["Idées", "Design", "Développement", "Lancement"],
     servicesTeaser: {
       eyebrow: "SERVICES",
@@ -153,6 +159,8 @@ export const getHomeContent = cache(async (explicit?: Locale): Promise<HomeConte
       headlineLines: doc.headline?.lines?.filter(Boolean) ?? fb.headlineLines,
       headlineEmphasis: doc.headline?.emphasis || fb.headlineEmphasis,
       intro: doc.intro || fb.intro,
+      showAvailability: doc.showAvailability ?? fb.showAvailability,
+      availabilityLabel: doc.availabilityLabel || fb.availabilityLabel,
       floatingNotes: doc.floatingNotes?.map((n) => n.text).filter(Boolean) ?? fb.floatingNotes,
       servicesTeaser: {
         eyebrow: doc.servicesTeaser?.eyebrow || fb.servicesTeaser.eyebrow,

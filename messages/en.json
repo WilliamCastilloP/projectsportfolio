@@ -47,6 +47,13 @@
   "home": {
     "startProject": "Start a project",
     "seeWork": "See our work",
+    "hero": {
+      "palette": "Palette",
+      "typography": "Typography",
+      "stickyNote": "More breathing room here",
+      "scrollIndicator": "Scroll to explore",
+      "availabilityDefault": "Accepting new projects"
+    },
     "scroll": "Scroll to explore",
     "exploreServices": "Explore all services",
     "learnMore": "Learn more",
