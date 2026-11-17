@@ -6,6 +6,7 @@ import { en } from "@payloadcms/translations/languages/en";
 import { es } from "@payloadcms/translations/languages/es";
 import { fr } from "@payloadcms/translations/languages/fr";
 import { buildConfig } from "payload";
+import { cloudinaryStorage } from "payload-cloudinary";
 import sharp from "sharp";
 import { Leads } from "./collections/Leads";
 import { Media } from "./collections/Media";
@@ -50,4 +51,15 @@ export default buildConfig({
     url: process.env.DATABASE_URI || process.env.MONGODB_URI || "",
   }),
   sharp,
+  plugins: [
+    cloudinaryStorage({
+      config: {
+        cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "",
+        api_key: process.env.CLOUDINARY_API_KEY || "",
+        api_secret: process.env.CLOUDINARY_API_SECRET || "",
+      },
+      collections: { media: true },
+      folder: "wc-digital",
+    }),
+  ],
 });

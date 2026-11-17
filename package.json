@@ -13,6 +13,7 @@
     "generate:importmap": "payload generate:importmap",
     "capture": "node scripts/capture-sites.mjs",
     "seed": "tsx --env-file=.env src/scripts/seed.ts",
+    "media:cloudinary": "tsx --env-file=.env src/scripts/upload-media-cloudinary.ts",
     "capture:mobile": "tsx --env-file=.env src/scripts/sync-mobile-shots.ts",
     "qa:visual": "node scripts/qa-validator/run.mjs",
     "qa:refs": "node scripts/qa-validator/crop-refs.mjs"
@@ -20,6 +21,7 @@
   "dependencies": {
     "@payloadcms/db-mongodb": "3.83.0",
     "@payloadcms/next": "3.83.0",
+    "@payloadcms/plugin-cloud-storage": "3.83.0",
     "@payloadcms/richtext-lexical": "3.83.0",
     "@payloadcms/translations": "3.83.0",
     "@payloadcms/ui": "3.83.0",
@@ -32,6 +34,7 @@
     "next-intl": "^4.14.4",
     "next-mdx-remote": "^6.0.0",
     "payload": "3.83.0",
+    "payload-cloudinary": "2.3.0",
     "pixelmatch": "^7.2.0",
     "pngjs": "^7.0.0",
     "react": "^19.2.8",

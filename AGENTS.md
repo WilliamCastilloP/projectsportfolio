@@ -64,7 +64,7 @@ Config: `src/payload.config.ts`. Secret: `PAYLOAD_SECRET`. DB: `DATABASE_URI`, c
 ### Collections
 
 - **`users`** — auth email/password. `role`: `admin` | `editor` (default `editor`). CRUD de usuarios solo `admin`. El panel lo abren admin y editor.
-- **`media`** — upload local de Payload (imágenes, mp4/webm/quicktime, JSON de Lottie). `alt` opcional. Lectura pública. **Cloudinary no está conectado**: `.env.example` lista las keys, el plugin no está en la config. `next.config.ts` ya permite `res.cloudinary.com` por si se enchufa después. Las URLs públicas salen de `mediaUrl()` en `src/lib/media.ts`: `url` del doc, o `/api/media/file/<filename>`.
+- **`media`** — uploads en Cloudinary vía `payload-cloudinary` (carpeta `wc-digital`). Acepta imágenes, mp4/webm/quicktime y JSON de Lottie. `alt` opcional. Lectura pública. `mediaUrl()` en `src/lib/media.ts` prefiere `cloudinary.secure_url` y solo cae a `/api/media/file/<filename>` si el documento no tiene URL de Cloudinary. `next.config.ts` permite `res.cloudinary.com` en `next/image`.
 - **`projects`** — casos. `status`: `draft` (default) | `published`. El anónimo solo lee `published`. `slug` único, read-only, generado en `beforeChange` desde el título (`src/lib/unique-slug.ts`). `internalNotes` se borra en `afterRead` si el usuario no es staff. Campos de ficha: title, description (≤240), year, stack, cover (required), gallery, live/repo URL, featured, order, categories, client, industry, platform, services, mockups desktop/mobile, challenge, solution, deliverables, keyPages, testimonial, body Lexical, aside. Varios están localizados.
 - **`leads`** — briefs del formulario. `create` público; lectura/edición staff; borrado solo admin. `status`: `new` | `read`.
 - **`pages`** — solo privacy, terms, cookies. `slug` es un select fijo. Body Lexical localizado. Solo admin escribe.
@@ -147,7 +147,7 @@ npm run capture:mobile   # sync de mockups mobile
 npm run qa:visual        # diff visual en scripts/qa-validator
 ```
 
-`.env` local (no se commitea): `DATABASE_URI`, `PAYLOAD_SECRET`. Cloudinary es opcional y hoy no hace nada. No escribas secretos en Markdown ni en el repo.
+`.env` local (no se commitea): `DATABASE_URI`, `PAYLOAD_SECRET`, `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`. Las mismas tres de Cloudinary tienen que estar en Vercel. No escribas secretos en Markdown ni en el repo.
 
 ## Invariantes para el siguiente agente
 
