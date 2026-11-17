@@ -658,15 +658,27 @@ export interface ServicesPage {
 export interface ProcessPage {
   id: string;
   eyebrow?: string | null;
-  title?: string | null;
+  title: string;
   emphasis?: string | null;
   intro?: string | null;
+  /**
+   * De 3 a 7 pasos. El orden de esta lista es el orden en la página.
+   */
   steps?:
     | {
         number: string;
         title: string;
         body: string;
+        mediaType?: ('image' | 'video' | 'lottie') | null;
+        /**
+         * Imagen, video (mp4/webm) o JSON de Lottie. El texto alternativo se edita en el archivo de Media.
+         */
+        media?: (string | null) | Media;
         icon?: (string | null) | Media;
+        cta?: {
+          label?: string | null;
+          href?: string | null;
+        };
         id?: string | null;
       }[]
     | null;
@@ -839,7 +851,15 @@ export interface ProcessPageSelect<T extends boolean = true> {
         number?: T;
         title?: T;
         body?: T;
+        mediaType?: T;
+        media?: T;
         icon?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
         id?: T;
       };
   updatedAt?: T;

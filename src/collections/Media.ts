@@ -17,7 +17,9 @@ export const Media: CollectionConfig = {
     update: isStaff,
     delete: isAdmin,
   },
-  upload: true,
+  upload: {
+    mimeTypes: ["image/*", "video/mp4", "video/webm", "video/quicktime", "application/json"],
+  },
   fields: [
     {
       name: "alt",

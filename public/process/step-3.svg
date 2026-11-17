@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#161616"/>
+  <text x="800" y="620" text-anchor="middle" fill="#f3efe8" font-family="Georgia, serif" font-size="420" font-style="italic">Aa</text>
+  <path d="M520 720h560" stroke="#f3efe8" stroke-width="1.5" opacity="0.4"/>
+</svg>

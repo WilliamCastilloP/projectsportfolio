@@ -1,8 +1,13 @@
+export type ProcessMediaType = "image" | "video" | "lottie";
+
 export type ProcessStep = {
   number: string;
   title: string;
   body: string;
-  icon?: string;
+  mediaType: ProcessMediaType;
+  mediaUrl?: string;
+  mediaAlt: string;
+  cta?: { label: string; href: string };
 };
 
 export type HomeContent = {

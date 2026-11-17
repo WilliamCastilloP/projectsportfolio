@@ -152,6 +152,12 @@
   }
 }
 
+@property --cta-w {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 @keyframes nav-reveal {
   from {
     opacity: 0;

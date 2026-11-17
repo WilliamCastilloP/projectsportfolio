@@ -11,7 +11,7 @@ import { cn } from "@/lib/cn";
 const navItems = [
   { key: "work", href: "/work" },
   { key: "services", href: "/services" },
-  { key: "process", href: "/process" },
+  { key: "process", href: "/#process" },
   { key: "about", href: "/about" },
 ] as const;
 
@@ -122,10 +122,7 @@ export function SiteNav() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const tuck = Math.max(20, Math.round(radius));
-  const visibleButton = !wide || open || phase === "off" ? 0 : fullWidth;
-  const buttonWidth = visibleButton === 0 ? 0 : visibleButton + tuck;
-  const motion = "420ms cubic-bezier(0.22, 1, 0.36, 1)";
+  const shown = wide && !open && phase === "pill";
   const glass = "backdrop-blur-[48px]";
 
   return (
@@ -143,13 +140,17 @@ export function SiteNav() {
           "pointer-events-auto relative mx-auto w-full max-w-4xl [--nav-pad:1rem] [container-type:inline-size] sm:[--nav-pad:1.25rem]",
           overFooter && "pointer-events-none",
         )}
-        style={{ ["--nav-r" as string]: `${radius}px` }}
+        style={{
+          ["--nav-r" as string]: `${radius}px`,
+          ["--cta-w" as string]: shown ? `${fullWidth}px` : "0px",
+          transition: "--cta-w 420ms cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
       >
         <span
           ref={measureRef}
           aria-hidden
           className="pointer-events-none absolute -left-[9999px] inline-flex h-9 items-center gap-2 whitespace-nowrap text-[13px] font-medium"
-          style={{ paddingLeft: tuck + 28, paddingRight: 24 }}
+          style={{ paddingLeft: Math.round(radius) + 24, paddingRight: 24 }}
         >
           {t("startProject")}
           <ArrowUpRight />
@@ -167,22 +168,29 @@ export function SiteNav() {
           )}
         />
 
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden overflow-hidden md:block"
-          style={{
-            width: visibleButton === 0 ? 0 : `calc(${visibleButton}px + var(--nav-r))`,
-            transition: `width ${motion}`,
-            maskImage:
-              "radial-gradient(circle at 0 50%, transparent var(--nav-r), #000 calc(var(--nav-r) + 0.5px))",
-            WebkitMaskImage:
-              "radial-gradient(circle at 0 50%, transparent var(--nav-r), #000 calc(var(--nav-r) + 0.5px))",
-          }}
-        >
-          <div className={cn("ml-[calc(100%-100cqi)] h-full w-[100cqi] rounded-full bg-[rgba(230,224,216,0.78)]", glass)} />
-        </div>
+        <div className="pointer-events-none absolute inset-0 z-0 hidden overflow-hidden rounded-full md:block">
+          <div
+            aria-hidden
+            className="absolute inset-y-0 right-0 overflow-hidden"
+            style={{
+              width: "var(--cta-w)",
+              maskImage: "linear-gradient(to right, transparent var(--nav-r), #000 var(--nav-r))",
+              WebkitMaskImage: "linear-gradient(to right, transparent var(--nav-r), #000 var(--nav-r))",
+            }}
+          >
+            <div className={cn("ml-[calc(100%-100cqi)] h-full w-[100cqi] rounded-full bg-[rgba(230,224,216,0.78)]", glass)} />
+          </div>
 
-        <div className="absolute inset-y-0 right-0 z-10 hidden md:block">
+          <div
+            className="pointer-events-auto absolute inset-y-0 right-0 overflow-hidden"
+            style={{
+              width: "var(--cta-w)",
+              maskImage:
+                "radial-gradient(circle at 0 50%, transparent var(--nav-r), #000 calc(var(--nav-r) + 0.5px))",
+              WebkitMaskImage:
+                "radial-gradient(circle at 0 50%, transparent var(--nav-r), #000 calc(var(--nav-r) + 0.5px))",
+            }}
+          >
           <Link
             href="/start"
             tabIndex={phase === "off" ? -1 : 0}
@@ -192,24 +200,22 @@ export function SiteNav() {
               top: 0,
               right: 0,
               bottom: 0,
-              width: buttonWidth,
+              width: fullWidth,
               borderTopLeftRadius: 0,
               borderBottomLeftRadius: 0,
               borderTopRightRadius: radius,
               borderBottomRightRadius: radius,
-              transitionProperty: "width",
-              transitionDuration: "420ms",
-              transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
             }}
           >
             <span
               className="inline-flex h-full items-center gap-2"
-              style={{ paddingLeft: tuck + 28, paddingRight: 24 }}
+              style={{ paddingLeft: Math.round(radius) + 24, paddingRight: 24 }}
             >
               {t("startProject")}
               <ArrowUpRight />
             </span>
           </Link>
+          </div>
         </div>
 
         <div
@@ -224,10 +230,7 @@ export function SiteNav() {
             open
               ? undefined
               : {
-                  width: visibleButton === 0 ? "100%" : `calc(100% - ${visibleButton}px)`,
-                  transitionProperty: "width",
-                  transitionDuration: "420ms",
-                  transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+                  width: "min(100%, calc(100% - var(--cta-w) + var(--nav-r)))",
                 }
           }
         >

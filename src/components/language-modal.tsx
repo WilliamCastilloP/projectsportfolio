@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type TransitionEvent } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
@@ -10,6 +10,7 @@ import { cn } from "@/lib/cn";
 const COOKIE = "wc-locale";
 const DISMISS = "wc-locale-modal-dismissed";
 const PICK_ORDER: Locale[] = ["en", "fr", "es"];
+const GREETING_EASE = "cubic-bezier(0.34, 1.45, 0.64, 1)";
 
 function suggestLocale(): Locale {
   if (typeof navigator === "undefined") return "es";
@@ -24,13 +25,21 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
   const router = useRouter();
   const pathname = usePathname();
   const [visible, setVisible] = useState(defaultOpen);
-  const [greetingIndex, setGreetingIndex] = useState(0);
   const [suggested, setSuggested] = useState<Locale>("es");
+  const [widths, setWidths] = useState<number[]>([]);
+  const [step, setStep] = useState<number>(routing.locales.length);
+  const [slide, setSlide] = useState(false);
+  const measureRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [viewportWidth, setViewportWidth] = useState(0);
 
   const greetings = routing.locales.map((locale) => ({
     text: t(`greeting.${locale}`),
     locale: locale as Locale,
   }));
+  const greetingCount = greetings.length;
+  const track = Array.from({ length: greetingCount * 4 }, (_, index) => greetings[index % greetingCount]);
+  const ready = viewportWidth > 0 && widths.length === greetingCount && widths.every((width) => width > 0);
 
   useEffect(() => {
     const force = new URLSearchParams(window.location.search).get("qaModal") === "1";
@@ -44,19 +53,43 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
 
   useEffect(() => {
     if (!visible) return;
+    const measure = () => {
+      const next = greetings.map((_, index) => measureRefs.current[index]?.getBoundingClientRect().width ?? 0);
+      if (next.every((width) => width > 0)) setWidths(next);
+    };
+    measure();
+    document.fonts?.ready.then(measure);
+  }, [visible, t]);
+
+  useEffect(() => {
+    const node = viewportRef.current;
+    if (!visible || !node) return;
+    const measure = () => setViewportWidth(node.getBoundingClientRect().width);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  useEffect(() => {
+    if (!visible || !ready) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const suggestedIndex = routing.locales.indexOf(suggested);
-    if (reduced) {
-      setGreetingIndex(suggestedIndex >= 0 ? suggestedIndex : 0);
-      return;
-    }
-    const timers = [
-      setTimeout(() => setGreetingIndex(1), 800),
-      setTimeout(() => setGreetingIndex(2), 1600),
-      setTimeout(() => setGreetingIndex(suggestedIndex >= 0 ? suggestedIndex : 0), 2400),
-    ];
-    return () => timers.forEach(clearTimeout);
-  }, [visible, suggested]);
+    if (reduced) return;
+    const timer = window.setInterval(() => {
+      setSlide(true);
+      setStep((current) => current + 1);
+    }, 1600);
+    return () => window.clearInterval(timer);
+  }, [visible, ready]);
+
+  const stride = viewportWidth / 2;
+  const translate = ready ? (1 - step) * stride : 0;
+
+  function onTrackEnd(event: TransitionEvent<HTMLDivElement>) {
+    if (event.propertyName !== "transform" || step < greetingCount * 3) return;
+    setSlide(false);
+    setStep((current) => current - greetingCount);
+  }
 
   function persist(code: Locale) {
     document.cookie = `${COOKIE}=${code}; path=/; max-age=31536000; SameSite=Lax`;
@@ -77,7 +110,7 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
         role="dialog"
         aria-modal="true"
         aria-labelledby="lang-modal-title"
-        className="relative w-full max-w-[36rem] rounded-[1.75rem] bg-surface px-8 py-10 shadow-[0_40px_80px_rgb(0_0_0/28%)] sm:px-12 sm:py-12"
+        className="relative w-full max-w-[36rem] overflow-hidden rounded-[1.75rem] bg-surface px-8 py-10 shadow-[0_40px_80px_rgb(0_0_0/28%)] sm:px-12 sm:py-12"
       >
         <button
           type="button"
@@ -90,24 +123,57 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
         <p id="lang-modal-title" className="label text-center text-faint">
           {t("title")}
         </p>
-        <div className="mt-8 flex min-h-[3.5rem] items-end justify-center gap-5 sm:gap-8">
-          {greetings.map((g, i) => {
-            const active = greetingIndex === i;
-            return (
+        <div
+          ref={viewportRef}
+          className="relative -mx-8 mt-8 h-[4.75rem] w-[calc(100%+4rem)] overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,black_16%,black_84%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_16%,black_84%,transparent)] sm:-mx-12 sm:w-[calc(100%+6rem)]"
+        >
+          <div className="pointer-events-none absolute -left-[9999px] top-0" aria-hidden>
+            {greetings.map((greeting, index) => (
               <span
-                key={g.locale}
-                className={cn(
-                  "serif-display text-3xl transition-all duration-500 sm:text-[2.75rem]",
-                  active ? "scale-100 text-fg opacity-100" : "scale-95 text-[#c8c2b8] opacity-70",
-                )}
+                key={greeting.locale}
+                ref={(node) => {
+                  measureRefs.current[index] = node;
+                }}
+                className="serif-display inline-block whitespace-nowrap text-3xl sm:text-[2.75rem]"
               >
-                {g.text}
-                {active ? (
-                  <span className="mx-auto mt-2 block h-px w-10 bg-fg/40" aria-hidden />
-                ) : null}
+                {greeting.text}
               </span>
-            );
-          })}
+            ))}
+          </div>
+          <div
+            className={cn("relative h-full", !ready && "invisible")}
+            style={{
+              transform: `translate3d(${translate}px, 0, 0)`,
+              transition: slide ? `transform 1100ms ${GREETING_EASE}` : "none",
+            }}
+            onTransitionEnd={onTrackEnd}
+          >
+            {track.map((greeting, index) => {
+              const active = index === step;
+              const width = widths[index % greetingCount] ?? 0;
+              return (
+                <span
+                  key={`${greeting.locale}-${index}`}
+                  className="absolute bottom-0 inline-flex flex-col items-center"
+                  style={{ left: index * stride - width / 2 }}
+                >
+                  <span
+                    className={cn(
+                      "serif-display whitespace-nowrap text-3xl sm:text-[2.75rem]",
+                      slide && "transition-colors duration-[1100ms]",
+                      active ? "text-fg" : "text-[#c8c2b8]",
+                    )}
+                  >
+                    {greeting.text}
+                  </span>
+                  <span
+                    className={cn("mt-2 h-px w-10", active ? "bg-fg/40" : "bg-transparent")}
+                    aria-hidden
+                  />
+                </span>
+              );
+            })}
+          </div>
         </div>
         <p className="mx-auto mt-6 max-w-sm text-center text-sm leading-relaxed text-muted">{t("subtitle")}</p>
         <div className="mt-10 flex flex-wrap justify-center gap-8 sm:gap-10">

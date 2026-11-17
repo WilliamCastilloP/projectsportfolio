@@ -4,7 +4,7 @@ export const Settings: GlobalConfig = {
   slug: "settings",
   label: "Ajustes",
   admin: {
-    group: "Sitio",
+    group: "Admin",
   },
   access: {
     read: () => true,

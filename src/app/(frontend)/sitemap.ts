@@ -4,7 +4,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { getAllProjects } from "@/lib/projects";
 import { getSettings } from "@/lib/site";
 
-const paths = ["/", "/work", "/services", "/process", "/about", "/start", "/privacy", "/terms", "/cookies"];
+const paths = ["/", "/work", "/services", "/about", "/start", "/privacy", "/terms", "/cookies"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const settings = await getSettings("es");

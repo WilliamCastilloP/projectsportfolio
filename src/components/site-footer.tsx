@@ -15,7 +15,7 @@ export async function SiteFooter({ tagline, socials }: SiteFooterProps) {
   const links = [
     { key: "work", href: "/work" },
     { key: "services", href: "/services" },
-    { key: "process", href: "/process" },
+    { key: "process", href: "/#process" },
     { key: "about", href: "/about" },
   ] as const;
 

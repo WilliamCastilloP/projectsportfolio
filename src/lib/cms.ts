@@ -217,12 +217,22 @@ export const getProcessContent = cache(async (explicit?: Locale): Promise<Proces
     });
     const steps =
       doc.steps
-        ?.map((s) => ({
-          number: s.number || "",
-          title: s.title || "",
-          body: s.body || "",
-          icon: mediaUrl(s.icon as number | Media) || undefined,
-        }))
+        ?.map((s) => {
+          const file = (s.media ?? s.icon) as number | Media | null | undefined;
+          const mime = file && typeof file === "object" ? file.mimeType || "" : "";
+          const mediaType = s.mediaType || (mime.startsWith("video/") ? "video" : mime.includes("json") ? "lottie" : "image");
+          const label = s.cta?.label?.trim() || "";
+          const href = s.cta?.href?.trim() || "";
+          return {
+            number: s.number || "",
+            title: s.title || "",
+            body: s.body || "",
+            mediaType,
+            mediaUrl: mediaUrl(file) || undefined,
+            mediaAlt: (file && typeof file === "object" && file.alt) || s.title || "",
+            cta: label && href ? { label, href } : undefined,
+          };
+        })
         .filter((s) => s.title) ?? [];
     return {
       eyebrow: doc.eyebrow || "OUR PROCESS",
