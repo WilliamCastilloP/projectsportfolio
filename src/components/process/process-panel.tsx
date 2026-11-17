@@ -50,7 +50,7 @@ export function ProcessPanel({
         ) : null}
       </div>
       <motion.div
-        className="relative min-h-[42vh] overflow-hidden rounded-2xl border border-white/10 bg-[linear-gradient(160deg,#2a2a2a,#141414)] will-change-transform lg:min-h-[var(--process-panel)]"
+        className="process-panel-bg relative min-h-[42vh] overflow-hidden rounded-2xl border border-white/10 will-change-transform lg:min-h-[var(--process-panel)]"
         style={{
           ["--process-panel" as string]: PROCESS_MOTION.panelMin,
           ...(animate ? { opacity, scale, y: 0 } : undefined),

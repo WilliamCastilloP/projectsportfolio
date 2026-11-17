@@ -5,6 +5,21 @@
   --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
+  /* Paleta (valores en :root) */
+  --color-ink: var(--ink);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+  --color-teal: var(--teal);
+  --color-teal-soft: var(--teal-soft);
+  --color-apricot: var(--apricot);
+  --color-apricot-soft: var(--apricot-soft);
+  --color-lilac: var(--lilac);
+  --color-dark: var(--dark);
+  --color-dark-raised: var(--dark-raised);
+  --color-error: var(--error);
+
+  /* Alias legacy (Tailwind existente) */
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-elevated: var(--elevated);
@@ -14,6 +29,16 @@
   --color-line: var(--line);
   --color-footer: var(--footer-bg);
   --color-footer-fg: var(--footer-fg);
+  --color-accent: var(--brand);
+
+  /* Chasis de mockups (realismo hardware, no marca) */
+  --color-mockup-laptop: var(--mockup-laptop);
+  --color-mockup-laptop-dot: var(--mockup-laptop-dot);
+  --color-mockup-hinge-hi: var(--mockup-hinge-hi);
+  --color-mockup-hinge-mid: var(--mockup-hinge-mid);
+  --color-mockup-hinge-lo: var(--mockup-hinge-lo);
+  --color-mockup-trackpad: var(--mockup-trackpad);
+  --color-mockup-phone: var(--mockup-phone);
 
   --text-display: clamp(2.5rem, 6vw, 4.5rem);
   --text-display--line-height: 1.05;
@@ -34,15 +59,46 @@
 @layer base {
   :root {
     color-scheme: light;
+
+    /* Crema y neutros */
     --bg: #faf8f5;
     --surface: #ffffff;
     --elevated: #f3f0eb;
-    --fg: #111111;
-    --muted: #5c5a56;
-    --faint: #8a8680;
-    --line: #e8e4dd;
-    --footer-bg: #0a0a0a;
-    --footer-fg: #f5f5f5;
+
+    /* Paleta de marca (hex canónicos) */
+    --ink: #2c2c34;
+    --brand: #8236d3;
+    --brand-hover: color-mix(in oklab, var(--brand) 86%, var(--ink));
+    --brand-soft: color-mix(in oklab, var(--brand) 10%, var(--bg));
+    --teal: #51a3a3;
+    --teal-soft: color-mix(in oklab, var(--teal) 14%, var(--bg));
+    --apricot: #f9c784;
+    --apricot-soft: color-mix(in oklab, var(--apricot) 22%, var(--bg));
+    --lilac: #978897;
+    --dark: var(--ink);
+    --dark-raised: color-mix(in oklab, var(--dark) 88%, white);
+    --error: color-mix(in oklab, #c62828 88%, var(--ink));
+
+    /* Reapunte de tokens legacy */
+    --fg: var(--ink);
+    --muted: color-mix(in oklab, var(--ink) 65%, var(--bg));
+    --faint: color-mix(in oklab, var(--ink) 42%, var(--bg));
+    --line: color-mix(in oklab, var(--lilac) 32%, var(--bg));
+    --footer-bg: var(--dark);
+    --footer-fg: var(--bg);
+
+    --process-progress: linear-gradient(90deg, var(--teal) 0%, var(--brand) 100%);
+
+    /* Mockups de dispositivo */
+    --mockup-laptop: #1c1c1e;
+    --mockup-laptop-dot: #3a3a3c;
+    --mockup-hinge-hi: #b4b8be;
+    --mockup-hinge-mid: #8d939b;
+    --mockup-hinge-lo: #6a7078;
+    --mockup-trackpad: #555b63;
+    --mockup-phone: #0c0c0e;
+
+    --shell-shadow: 0 28px 80px color-mix(in oklab, var(--ink) 22%, transparent);
   }
 
   html {
@@ -57,12 +113,12 @@
   }
 
   ::selection {
-    background-color: #111;
-    color: #fff;
+    background-color: var(--brand-soft);
+    color: var(--ink);
   }
 
   :focus-visible {
-    outline: 2px solid #111;
+    outline: 2px solid var(--brand);
     outline-offset: 3px;
   }
 }
@@ -82,11 +138,34 @@
 }
 
 @utility btn-primary {
-  @apply inline-flex items-center justify-center gap-2 rounded-full bg-fg px-6 py-3 text-sm font-medium text-surface transition-colors duration-200 hover:bg-[#2a2a2a];
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-brand-hover;
 }
 
 @utility btn-outline {
-  @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface px-6 py-3 text-sm font-medium text-fg transition-colors duration-200 hover:border-fg/30 hover:bg-elevated;
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-lilac/40 bg-surface px-6 py-3 text-sm font-medium text-ink transition-colors duration-200 hover:border-brand/35 hover:bg-brand-soft;
+}
+
+/** Botón principal sobre láminas oscuras (footer, proceso, etc.). */
+@utility btn-on-dark {
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-apricot px-6 py-3 text-sm font-medium text-ink transition-colors duration-200 hover:brightness-[0.97];
+}
+
+@utility text-gradient-brand {
+  background-image: linear-gradient(135deg, var(--brand) 0%, var(--teal) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: var(--brand);
+}
+
+@utility aurora-bg {
+  background-image:
+    radial-gradient(ellipse 85% 55% at 18% 22%, color-mix(in oklab, var(--brand) 16%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 82% 28%, color-mix(in oklab, var(--teal) 14%, transparent), transparent 72%),
+    radial-gradient(ellipse 60% 50% at 50% 88%, color-mix(in oklab, var(--apricot) 12%, transparent), transparent 75%);
+}
+
+@utility grain-overlay {
+  @apply pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-soft-light;
 }
 
 @layer components {
@@ -98,7 +177,7 @@
     background: var(--bg);
     border-bottom-left-radius: var(--radius-shell);
     border-bottom-right-radius: var(--radius-shell);
-    box-shadow: 0 28px 80px rgb(0 0 0 / 22%);
+    box-shadow: var(--shell-shadow);
   }
 
   .site-footer-fixed {
@@ -110,7 +189,7 @@
   }
 
   .nav-link {
-    @apply relative text-sm text-muted transition-colors duration-200 hover:text-fg;
+    @apply relative text-sm text-muted transition-colors duration-200 hover:text-brand;
   }
 
   .nav-link::after {
@@ -118,9 +197,9 @@
     position: absolute;
     left: 0;
     bottom: -4px;
-    height: 1px;
+    height: 2px;
     width: 100%;
-    background: currentColor;
+    background: var(--brand);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.25s var(--ease-out-expo);
@@ -132,7 +211,7 @@
   }
 
   .nav-link[data-active="true"] {
-    @apply text-fg;
+    @apply font-medium text-brand;
   }
 
   .rich-text {
@@ -149,6 +228,42 @@
 
   .rich-text ul {
     @apply list-disc space-y-2 pl-5;
+  }
+
+  .rich-text a {
+    @apply text-brand underline decoration-brand/35 underline-offset-4 transition-colors hover:decoration-brand;
+  }
+
+  .rich-text blockquote {
+    @apply border-l-2 border-teal pl-5 text-fg italic;
+  }
+
+  .rich-text mark {
+    @apply rounded-sm bg-apricot-soft px-1 text-ink;
+  }
+
+  /** Card con capas: borde lilac, sombra doble, hover Violet→Teal. */
+  .card-layered {
+    @apply rounded-2xl border border-lilac/30 bg-surface;
+    box-shadow:
+      0 1px 2px color-mix(in oklab, var(--ink) 5%, transparent),
+      0 14px 36px color-mix(in oklab, var(--ink) 7%, transparent);
+    transition:
+      transform 0.28s var(--ease-out-expo),
+      border-color 0.28s var(--ease-out-expo),
+      box-shadow 0.28s var(--ease-out-expo);
+  }
+
+  .card-layered:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--brand) 55%, var(--teal) 45%);
+    box-shadow:
+      0 2px 4px color-mix(in oklab, var(--ink) 6%, transparent),
+      0 18px 44px color-mix(in oklab, var(--brand) 12%, transparent);
+  }
+
+  .process-panel-bg {
+    background: linear-gradient(160deg, var(--dark-raised), var(--dark));
   }
 }
 
@@ -176,5 +291,9 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .card-layered:hover {
+    transform: none;
   }
 }

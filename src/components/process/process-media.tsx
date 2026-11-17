@@ -49,7 +49,7 @@ export function ProcessMedia({
 
   if (step.mediaType === "lottie") {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-[#141414] text-sm text-white/50">
+      <div className="flex h-full w-full items-center justify-center bg-dark text-sm text-white/50">
         {step.mediaAlt || step.title}
       </div>
     );

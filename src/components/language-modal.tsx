@@ -110,7 +110,7 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
         role="dialog"
         aria-modal="true"
         aria-labelledby="lang-modal-title"
-        className="relative w-full max-w-[36rem] overflow-hidden rounded-[1.75rem] bg-surface px-8 py-10 shadow-[0_40px_80px_rgb(0_0_0/28%)] sm:px-12 sm:py-12"
+        className="relative w-full max-w-[36rem] overflow-hidden rounded-[1.75rem] bg-surface px-8 py-10 shadow-[0_40px_80px_color-mix(in_oklab,var(--ink)_28%,transparent)] sm:px-12 sm:py-12"
       >
         <button
           type="button"
@@ -161,7 +161,7 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
                     className={cn(
                       "serif-display whitespace-nowrap text-3xl sm:text-[2.75rem]",
                       slide && "transition-colors duration-[1100ms]",
-                      active ? "text-fg" : "text-[#c8c2b8]",
+                      active ? "text-fg" : "text-faint",
                     )}
                   >
                     {greeting.text}
@@ -190,8 +190,8 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
                 className={cn(
                   "flex size-[5.25rem] items-center justify-center rounded-full transition",
                   suggested === code
-                    ? "bg-[#efe8dc] ring-1 ring-fg/10"
-                    : "bg-[#f4efe6] hover:bg-[#efe8dc]",
+                    ? "bg-line ring-1 ring-lilac/25"
+                    : "bg-elevated hover:bg-line",
                 )}
               >
                 <LocaleFlag locale={code} className="size-11" />

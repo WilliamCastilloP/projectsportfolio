@@ -1,4 +1,4 @@
-/** Ajustes del scrollytelling. La barra copia el degradado rosa a azul de la referencia. */
+/** Ajustes del scrollytelling. La barra usa `--process-progress` (Teal → Violet en globals.css). */
 export const PROCESS_MOTION = {
   stickyTop: "7rem",
   /** Padding vertical de la sección (arriba = abajo; el contenido final se pega a este pb). */
@@ -16,7 +16,7 @@ export const PROCESS_MOTION = {
    * se calcula en runtime como `end ${barY}`.
    */
   progressOffsetLastStart: "start center" as const,
-  progress: "linear-gradient(90deg, #ff3d8a 0%, #b56cf5 48%, #4d8fff 100%)",
+  progress: "var(--process-progress)",
   inactiveOpacity: 0.3,
   scaleRest: 0.97,
 } as const;

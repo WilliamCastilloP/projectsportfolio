@@ -72,7 +72,7 @@ export function ProcessScrollytelling({ content }: { content: ProcessContent }) 
   return (
     <section
       id="process"
-      className="scroll-mt-28 mx-4 my-6 rounded-[2rem] bg-[#1a1a1a] py-16 text-white sm:mx-6 lg:mx-8 lg:py-[var(--process-pad)]"
+      className="scroll-mt-28 mx-4 my-6 rounded-[2rem] bg-dark py-16 text-white sm:mx-6 lg:mx-8 lg:py-[var(--process-pad)]"
       style={{
         ["--process-sticky" as string]: PROCESS_MOTION.stickyTop,
         ["--process-pad" as string]: PROCESS_MOTION.sectionPad,

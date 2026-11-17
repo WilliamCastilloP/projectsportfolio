@@ -15,7 +15,7 @@ export function Glow({ className }: { className?: string }) {
         className="absolute top-[-30%] left-1/2 h-[80vh] w-[120vw] -translate-x-1/2 opacity-70"
         style={{
           background:
-            "radial-gradient(50% 50% at 50% 50%, rgba(237,237,237,0.07) 0%, rgba(237,237,237,0) 70%)",
+            "radial-gradient(50% 50% at 50% 50%, color-mix(in oklab, var(--bg) 93%, transparent) 0%, transparent 70%)",
         }}
       />
       <div

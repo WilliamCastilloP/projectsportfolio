@@ -191,7 +191,7 @@ export function StartProjectForm() {
         ) : null}
       </div>
 
-      {error ? <p className="mt-4 text-sm text-red-600">{error}</p> : null}
+      {error ? <p className="mt-4 text-sm text-error">{error}</p> : null}
 
       <div className="mt-8 flex justify-between gap-3">
         {step > 1 ? (

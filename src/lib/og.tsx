@@ -33,8 +33,9 @@ export function OgFrame({
         justifyContent: "space-between",
         width: "100%",
         height: "100%",
+        /* Espejo de :root en globals.css — centralizar en tanda 8 */
         background: "#faf8f5",
-        color: "#111",
+        color: "#2c2c34",
         padding: "64px",
         fontFamily: "Geist, sans-serif",
       }}
