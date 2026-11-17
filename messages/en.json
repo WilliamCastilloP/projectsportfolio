@@ -54,6 +54,7 @@
     "viewCase": "View case study"
   },
   "services": {
+    "metaTitle": "Services",
     "start": "Start a project",
     "learnMore": "Learn more",
     "fallbackTitle": "Everything you need to show up",
@@ -79,6 +80,8 @@
     "solution": "The solution",
     "keyPages": "Key pages",
     "keyPagesTitle": "A clean and cohesive experience",
+    "deliverables": "Deliverables",
+    "ogImageAlt": "Case study: {title}",
     "filter": {
       "all": "All",
       "website": "Websites",
@@ -88,6 +91,7 @@
     }
   },
   "about": {
+    "metaTitle": "About",
     "start": "Start a project",
     "fallbackIntro": "We design and build custom websites and e-commerce platforms for businesses that want to grow online.",
     "founderTitle": "Design, tech and strategy — all in one place.",
@@ -145,6 +149,12 @@
     "error": "Something went wrong. Please try again.",
     "successTitle": "Project sent",
     "successBody": "Thanks — we received your brief and will reply by email soon."
+  },
+  "legal": {
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "cookies": "Cookie policy",
+    "empty": "Content coming soon."
   },
   "notFound": {
     "label": "Not found",

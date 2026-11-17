@@ -54,6 +54,7 @@
     "viewCase": "Ver el caso"
   },
   "services": {
+    "metaTitle": "Servicios",
     "start": "Empezar un proyecto",
     "learnMore": "Saber más",
     "fallbackTitle": "Todo lo que necesitas para",
@@ -79,6 +80,8 @@
     "solution": "La solución",
     "keyPages": "Páginas clave",
     "keyPagesTitle": "Una experiencia clara y coherente",
+    "deliverables": "Entregables",
+    "ogImageAlt": "Caso de estudio: {title}",
     "filter": {
       "all": "Todos",
       "website": "Sitios web",
@@ -88,6 +91,7 @@
     }
   },
   "about": {
+    "metaTitle": "Nosotros",
     "start": "Empezar un proyecto",
     "fallbackIntro": "Diseñamos y desarrollamos sitios web y e-commerce a medida para empresas que quieren crecer en línea.",
     "founderTitle": "Diseño, tecnología y estrategia — en un solo lugar.",
@@ -145,6 +149,12 @@
     "error": "Algo salió mal. Inténtalo de nuevo.",
     "successTitle": "Proyecto enviado",
     "successBody": "Gracias — recibimos tu brief y responderemos pronto por correo."
+  },
+  "legal": {
+    "privacy": "Política de privacidad",
+    "terms": "Términos de uso",
+    "cookies": "Política de cookies",
+    "empty": "Contenido disponible pronto."
   },
   "notFound": {
     "label": "No encontrada",

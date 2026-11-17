@@ -1,17 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CtaBand } from "@/components/cta-band";
 import { ArrowUpRight } from "@/components/arrow-icon";
 import { Link } from "@/i18n/navigation";
 import { languageAlternates } from "@/i18n/path";
 import { getServicesContent } from "@/lib/cms";
+import { pageOpenGraph } from "@/lib/metadata";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const data = await getServicesContent();
+export async function generateMetadata(
+  _props: PageProps<"/[locale]/services">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const [data, t] = await Promise.all([getServicesContent(), getTranslations("services")]);
+  const title = t("metaTitle");
   return {
-    title: "Services",
+    title,
     description: data.intro,
     alternates: { canonical: "/services", languages: languageAlternates("/services") },
+    openGraph: await pageOpenGraph({ path: "/services", title, description: data.intro, parent }),
   };
 }
 

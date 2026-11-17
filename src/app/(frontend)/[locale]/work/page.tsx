@@ -1,15 +1,21 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CtaBand } from "@/components/cta-band";
 import { WorkShowcase } from "@/components/work/work-showcase";
 import { languageAlternates } from "@/i18n/path";
+import { pageOpenGraph } from "@/lib/metadata";
 import { getAllProjects } from "@/lib/projects";
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(
+  _props: PageProps<"/[locale]/work">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
   const t = await getTranslations("work");
+  const title = t("all");
   return {
-    title: t("all"),
+    title,
     alternates: { canonical: "/work", languages: languageAlternates("/work") },
+    openGraph: await pageOpenGraph({ path: "/work", title, description: t("intro"), parent }),
   };
 }
 

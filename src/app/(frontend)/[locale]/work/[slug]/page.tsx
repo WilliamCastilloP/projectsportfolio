@@ -8,6 +8,7 @@ import { RichText } from "@/components/rich-text";
 import { ArrowUpRight } from "@/components/arrow-icon";
 import { Link } from "@/i18n/navigation";
 import { languageAlternates } from "@/i18n/path";
+import { pageOpenGraph } from "@/lib/metadata";
 import { getProject } from "@/lib/projects";
 
 export const dynamicParams = true;
@@ -18,14 +19,34 @@ export async function generateMetadata({
   const { slug } = await params;
   const project = await getProject(slug);
   if (!project) return {};
+  const path = `/work/${project.slug}`;
   return {
     title: project.title,
     description: project.description,
     alternates: {
-      canonical: `/work/${project.slug}`,
-      languages: languageAlternates(`/work/${project.slug}`),
+      canonical: path,
+      languages: languageAlternates(path),
     },
+    openGraph: await pageOpenGraph({
+      path,
+      title: project.title,
+      description: project.description,
+      type: "article",
+    }),
   };
+}
+
+function DeliverableList({ items }: { items: string[] }) {
+  if (items.length === 0) return null;
+  return (
+    <ul className="space-y-2 text-sm text-muted">
+      {items.map((d) => (
+        <li key={d} className="flex gap-2">
+          <span aria-hidden>✓</span> {d}
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 export default async function CaseStudyPage({ params }: PageProps<"/[locale]/work/[slug]">) {
@@ -49,8 +70,12 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
         <Link href="/work" className="text-sm text-muted hover:text-fg">
           ← {t("back")}
         </Link>
-        <p className="label mt-8 text-faint">{project.categories.join(" · ").toUpperCase() || "PROJECT"}</p>
-        <h1 className="mt-3 serif-display text-title">{project.title}</h1>
+        {project.categories.length > 0 ? (
+          <p className="label mt-8 text-faint">{project.categories.map((c) => t(`filter.${c}`)).join(" · ")}</p>
+        ) : null}
+        <h1 className={`${project.categories.length > 0 ? "mt-3" : "mt-8"} serif-display text-title`}>
+          {project.title}
+        </h1>
         <p className="mt-4 max-w-2xl text-muted">{project.description}</p>
         {project.liveUrl ? (
           <a href={project.liveUrl} target="_blank" rel="noreferrer" className="btn-primary mt-6 inline-flex">
@@ -77,36 +102,39 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
           </dl>
         ) : null}
 
-        {project.challenge ? (
-          <section className="mt-16 grid gap-8 lg:grid-cols-2">
-            <h2 className="serif-display text-3xl">{t("overview")}</h2>
-            <p className="text-muted">{project.challenge}</p>
-          </section>
-        ) : null}
-
-        {project.solution ? (
-          <section className="mt-16 grid gap-8 lg:grid-cols-2">
-            <h2 className="serif-display text-3xl">{t("solution")}</h2>
-            <div>
-              <p className="text-muted">{project.solution}</p>
-              {project.deliverables.length > 0 ? (
-                <ul className="mt-6 space-y-2 text-sm text-muted">
-                  {project.deliverables.map((d) => (
-                    <li key={d} className="flex gap-2">
-                      <span>✓</span> {d}
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </div>
-          </section>
-        ) : null}
-
+        {/* El body trae sus propios titulares; challenge y solution lo resumen y solo se pintan si no hay body. */}
         {project.body ? (
-          <div className="mt-16 max-w-3xl">
-            <RichText data={project.body} aside={project.aside} />
-          </div>
-        ) : null}
+          <>
+            <div className="mt-16 max-w-3xl">
+              <RichText data={project.body} aside={project.aside} />
+            </div>
+            {project.deliverables.length > 0 ? (
+              <section className="mt-16 grid gap-8 lg:grid-cols-2">
+                <h2 className="serif-display text-3xl">{t("deliverables")}</h2>
+                <DeliverableList items={project.deliverables} />
+              </section>
+            ) : null}
+          </>
+        ) : (
+          <>
+            {project.challenge ? (
+              <section className="mt-16 grid gap-8 lg:grid-cols-2">
+                <h2 className="serif-display text-3xl">{t("overview")}</h2>
+                <p className="text-muted">{project.challenge}</p>
+              </section>
+            ) : null}
+
+            {project.solution || project.deliverables.length > 0 ? (
+              <section className="mt-16 grid gap-8 lg:grid-cols-2">
+                <h2 className="serif-display text-3xl">{project.solution ? t("solution") : t("deliverables")}</h2>
+                <div>
+                  {project.solution ? <p className="mb-6 text-muted">{project.solution}</p> : null}
+                  <DeliverableList items={project.deliverables} />
+                </div>
+              </section>
+            ) : null}
+          </>
+        )}
 
         {project.keyPages.length > 0 ? (
           <section className="mt-20">

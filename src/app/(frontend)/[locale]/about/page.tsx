@@ -1,18 +1,25 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { CtaBand } from "@/components/cta-band";
 import { ArrowUpRight } from "@/components/arrow-icon";
+import { ValueIcon } from "@/components/value-icon";
 import { Link } from "@/i18n/navigation";
 import { languageAlternates } from "@/i18n/path";
 import { getAboutContent } from "@/lib/cms";
+import { pageOpenGraph } from "@/lib/metadata";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const about = await getAboutContent();
+export async function generateMetadata(
+  _props: PageProps<"/[locale]/about">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const [about, t] = await Promise.all([getAboutContent(), getTranslations("about")]);
+  const title = t("metaTitle");
   return {
-    title: "About",
+    title,
     description: about.hero.body,
     alternates: { canonical: "/about", languages: languageAlternates("/about") },
+    openGraph: await pageOpenGraph({ path: "/about", title, description: about.hero.body, parent }),
   };
 }
 
@@ -57,7 +64,7 @@ export default async function AboutPage() {
             <p className="label text-faint">{about.founder.role}</p>
             <h2 className="mt-3 serif-display text-3xl">{t("founderTitle")}</h2>
             {about.founder.note ? <p className="mt-2 text-sm italic text-muted">{about.founder.note}</p> : null}
-            <p className="mt-6 whitespace-pre-line text-muted">{about.founder.bio}</p>
+            {about.founder.bio ? <p className="mt-6 whitespace-pre-line text-muted">{about.founder.bio}</p> : null}
             <p className="mt-6 font-medium">{about.founder.name}</p>
           </div>
         </section>
@@ -78,7 +85,7 @@ export default async function AboutPage() {
             {about.values.map((v) => (
               <div key={v.title} className="text-center">
                 <div className="mx-auto flex size-14 items-center justify-center rounded-full border border-line bg-elevated text-lg">
-                  {v.icon || "◦"}
+                  <ValueIcon name={v.icon} />
                 </div>
                 <h3 className="mt-4 font-medium">{v.title}</h3>
                 <p className="mt-2 text-sm text-muted">{v.body}</p>
@@ -88,27 +95,7 @@ export default async function AboutPage() {
         </section>
       ) : null}
 
-      {about.numbers.length > 0 ? (
-        <section className="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8 lg:grid-cols-2">
-          {about.numbersImage ? (
-            <Image src={about.numbersImage} alt="" width={800} height={500} unoptimized className="rounded-3xl object-cover" />
-          ) : (
-            <div className="min-h-[240px] rounded-3xl bg-elevated" />
-          )}
-          <div>
-            <p className="label text-faint">{t("numbersEyebrow")}</p>
-            <h2 className="mt-3 serif-display text-3xl">{t("numbersTitle")}</h2>
-            <dl className="mt-8 grid grid-cols-2 gap-6">
-              {about.numbers.map((n) => (
-                <div key={n.label}>
-                  <dt className="serif-display text-3xl">{n.value}</dt>
-                  <dd className="mt-1 text-sm text-muted">{n.label}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
-      ) : null}
+      {/* `about.numbers` no se pinta: solo vuelve cuando haya cifras verificables. */}
 
       <CtaBand />
     </>

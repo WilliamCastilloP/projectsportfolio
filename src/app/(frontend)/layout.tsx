@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { Playfair_Display } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import { languageAlternates } from "@/i18n/path";
+import { isIndexable, pageOpenGraph } from "@/lib/metadata";
 import { getSettings } from "@/lib/site";
 import "./globals.css";
 
@@ -38,15 +39,8 @@ export async function generateMetadata(): Promise<Metadata> {
       canonical: locale === "es" ? "/" : `/${locale}`,
       languages: languageAlternates("/"),
     },
-    openGraph: {
-      type: "website",
-      locale: locale === "fr" ? "fr_FR" : locale === "en" ? "en_US" : "es_ES",
-      url: settings.url,
-      siteName: settings.name,
-      title: settings.name,
-      description,
-    },
-    robots: { index: true, follow: true },
+    openGraph: await pageOpenGraph({ path: "/", description }),
+    robots: isIndexable() ? { index: true, follow: true } : { index: false, follow: false },
   };
 }
 

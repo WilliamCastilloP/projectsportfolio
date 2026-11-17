@@ -1,14 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { StartProjectForm } from "@/components/start-project-form";
 import { languageAlternates } from "@/i18n/path";
+import { pageOpenGraph } from "@/lib/metadata";
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata(
+  _props: PageProps<"/[locale]/start">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
   const t = await getTranslations("start");
+  const title = t("metaTitle");
   return {
-    title: t("metaTitle"),
+    title,
     alternates: { canonical: "/start", languages: languageAlternates("/start") },
+    openGraph: await pageOpenGraph({ path: "/start", title, description: t("intro"), parent }),
   };
 }
 

@@ -54,6 +54,7 @@
     "viewCase": "Voir l'étude de cas"
   },
   "services": {
+    "metaTitle": "Services",
     "start": "Démarrer un projet",
     "learnMore": "En savoir plus",
     "fallbackTitle": "Tout ce qu'il faut pour exister",
@@ -79,6 +80,8 @@
     "solution": "La solution",
     "keyPages": "Pages clés",
     "keyPagesTitle": "Une expérience claire et cohérente",
+    "deliverables": "Livrables",
+    "ogImageAlt": "Étude de cas : {title}",
     "filter": {
       "all": "Tous",
       "website": "Sites web",
@@ -88,6 +91,7 @@
     }
   },
   "about": {
+    "metaTitle": "À propos",
     "start": "Démarrer un projet",
     "fallbackIntro": "Nous concevons et développons des sites web et e-commerce sur mesure pour les entreprises qui veulent grandir en ligne.",
     "founderTitle": "Design, tech et stratégie — au même endroit.",
@@ -145,6 +149,12 @@
     "error": "Une erreur s'est produite. Réessayez.",
     "successTitle": "Projet envoyé",
     "successBody": "Merci — nous avons reçu votre brief et répondrons bientôt par e-mail."
+  },
+  "legal": {
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "cookies": "Politique de cookies",
+    "empty": "Contenu bientôt disponible."
   },
   "notFound": {
     "label": "Introuvable",

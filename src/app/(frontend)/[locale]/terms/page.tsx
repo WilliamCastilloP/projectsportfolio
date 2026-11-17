@@ -1,23 +1,30 @@
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { RichText } from "@/components/rich-text";
 import { languageAlternates } from "@/i18n/path";
 import { getLegalPage } from "@/lib/cms";
+import { pageOpenGraph } from "@/lib/metadata";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getLegalPage("terms");
+export async function generateMetadata(
+  _props: PageProps<"/[locale]/terms">,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const [page, t] = await Promise.all([getLegalPage("terms"), getTranslations("legal")]);
+  const title = page?.title || t("terms");
   return {
-    title: page?.title || "Terms",
+    title,
     alternates: { canonical: "/terms", languages: languageAlternates("/terms") },
+    openGraph: await pageOpenGraph({ path: "/terms", title, parent }),
   };
 }
 
 export default async function TermsPage() {
-  const page = await getLegalPage("terms");
+  const [page, t] = await Promise.all([getLegalPage("terms"), getTranslations("legal")]);
   return (
     <article className="mx-auto max-w-3xl px-5 py-16 sm:px-8 sm:py-24">
-      <h1 className="serif-display text-title">{page?.title || "Terms"}</h1>
+      <h1 className="serif-display text-title">{page?.title || t("terms")}</h1>
       <div className="rich-text mt-8">
-        {page?.body ? <RichText data={page.body} /> : <p className="text-muted">Content coming soon.</p>}
+        {page?.body ? <RichText data={page.body} /> : <p className="text-muted">{t("empty")}</p>}
       </div>
     </article>
   );

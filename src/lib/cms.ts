@@ -246,6 +246,12 @@ export const getProcessContent = cache(async (explicit?: Locale): Promise<Proces
   }
 });
 
+/** El seed deja "Placeholder — …" en los tres idiomas; no debe llegar al visitante. */
+function withoutPlaceholder(text?: string | null) {
+  const value = text?.trim() ?? "";
+  return /^placeholder\b/i.test(value) ? "" : value;
+}
+
 export const getAboutContent = cache(async (explicit?: Locale): Promise<AboutContent> => {
   const locale = await localeOrDefault(explicit);
   try {
@@ -267,8 +273,8 @@ export const getAboutContent = cache(async (explicit?: Locale): Promise<AboutCon
       founder: {
         name: doc.founder?.name || "",
         role: doc.founder?.role || "",
-        note: doc.founder?.note || "",
-        bio: doc.founder?.bio || "",
+        note: withoutPlaceholder(doc.founder?.note),
+        bio: withoutPlaceholder(doc.founder?.bio),
         photo: mediaUrl(doc.founder?.photo as number | Media) || undefined,
         signature: mediaUrl(doc.founder?.signature as number | Media) || undefined,
       },

@@ -7,11 +7,16 @@ import { ArrowUpRight } from "@/components/arrow-icon";
 import { DeviceMockup } from "@/components/device-mockup";
 import type { Project, ProjectCategory } from "@/types/project";
 
-const filters: Array<ProjectCategory | "all"> = ["all", "website", "ecommerce", "landing", "branding"];
+const categories: ProjectCategory[] = ["website", "ecommerce", "landing", "branding"];
 
 export function WorkShowcase({ projects }: { projects: Project[] }) {
   const t = useTranslations("work");
   const [active, setActive] = useState<ProjectCategory | "all">("all");
+
+  const filters = useMemo<Array<ProjectCategory | "all">>(
+    () => ["all", ...categories.filter((c) => projects.some((p) => p.categories.includes(c)))],
+    [projects],
+  );
 
   const filtered = useMemo(() => {
     if (active === "all") return projects;
@@ -53,7 +58,10 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
               <p className="label text-faint">{String(index + 1).padStart(2, "0")}</p>
               <h2 className="mt-2 serif-display text-3xl">{project.title}</h2>
               <p className="label mt-2 text-faint">
-                {(project.categories.length ? project.categories : project.stack.slice(0, 3)).join(" · ")}
+                {(project.categories.length
+                  ? project.categories.map((c) => t(`filter.${c}`))
+                  : project.stack.slice(0, 3)
+                ).join(" · ")}
               </p>
               <p className="mt-4 text-muted">{project.description}</p>
               <Link href={`/work/${project.slug}`} className="mt-6 inline-flex text-sm font-medium">
