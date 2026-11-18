@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import { Link } from "@/i18n/navigation";
-import { ArrowUpRight } from "@/components/arrow-icon";
+import { ArrowRight } from "@/components/arrow-icon";
 import { cn } from "@/lib/cn";
 
 const navItems = [
@@ -122,7 +122,8 @@ export function SiteNav() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  const shown = wide && !open && phase === "pill";
+  const onStart = pathname === "/start";
+  const shown = wide && !open && phase === "pill" && !onStart;
   const glass = "backdrop-blur-[48px]";
 
   return (
@@ -153,7 +154,7 @@ export function SiteNav() {
           style={{ paddingLeft: Math.round(radius) + 24, paddingRight: 24 }}
         >
           {t("startProject")}
-          <ArrowUpRight />
+          <ArrowRight />
         </span>
 
         <div aria-hidden className="invisible hidden px-4 py-2 md:block sm:px-5 sm:py-2.5">
@@ -163,7 +164,7 @@ export function SiteNav() {
         <div
           aria-hidden
           className={cn(
-            "pointer-events-none absolute inset-0 shadow-[0_8px_40px_rgb(0_0_0/8%)]",
+            "pointer-events-none absolute inset-0 shadow-[0_8px_40px_color-mix(in_oklab,var(--ink)_8%,transparent)]",
             open ? "rounded-[1.75rem]" : "rounded-full",
           )}
         />
@@ -178,7 +179,7 @@ export function SiteNav() {
               WebkitMaskImage: "linear-gradient(to right, transparent var(--nav-r), #000 var(--nav-r))",
             }}
           >
-            <div className={cn("ml-[calc(100%-100cqi)] h-full w-[100cqi] rounded-full bg-[rgba(230,224,216,0.78)]", glass)} />
+            <div className={cn("ml-[calc(100%-100cqi)] h-full w-[100cqi] rounded-full bg-bg/80", glass)} />
           </div>
 
           <div
@@ -193,8 +194,8 @@ export function SiteNav() {
           >
           <Link
             href="/start"
-            tabIndex={phase === "off" ? -1 : 0}
-            aria-hidden={phase === "off"}
+            tabIndex={shown ? 0 : -1}
+            aria-hidden={!shown}
             className="btn-primary absolute overflow-hidden whitespace-nowrap !justify-start !px-0 !py-0 text-[13px]"
             style={{
               top: 0,
@@ -212,7 +213,7 @@ export function SiteNav() {
               style={{ paddingLeft: Math.round(radius) + 24, paddingRight: 24 }}
             >
               {t("startProject")}
-              <ArrowUpRight />
+              <ArrowRight />
             </span>
           </Link>
           </div>
@@ -223,8 +224,8 @@ export function SiteNav() {
             "relative z-20",
             glass,
             open
-              ? "w-full rounded-[1.75rem] bg-[rgba(232,226,218,0.94)] p-4 sm:p-5"
-              : "rounded-full bg-[rgba(230,224,216,0.78)] px-4 py-2 sm:px-5 sm:py-2.5 md:absolute md:inset-y-0 md:left-0",
+              ? "w-full rounded-[1.75rem] bg-bg/95 p-4 sm:p-5"
+              : "rounded-full bg-bg/80 px-4 py-2 sm:px-5 sm:py-2.5 md:absolute md:inset-y-0 md:left-0",
           )}
           style={
             open
@@ -289,24 +290,34 @@ export function SiteNav() {
                   key={item.key}
                   href={item.href}
                   style={{ animationDelay: `${index * 55}ms` }}
-                  className="animate-[nav-reveal_0.45s_cubic-bezier(0.22,1,0.36,1)_both] rounded-xl px-3 py-2.5 text-lg text-fg transition-colors duration-200 hover:bg-black/5"
+                  className="animate-[nav-reveal_0.45s_cubic-bezier(0.22,1,0.36,1)_both] rounded-xl px-3 py-2.5 text-lg text-fg transition-colors duration-200 hover:bg-ink/5"
                   onClick={() => setOpen(false)}
                 >
                   {t(item.key)}
                 </Link>
               ))}
-              <Link
-                href="/start"
-                style={{ animationDelay: `${navItems.length * 55}ms` }}
-                className="btn-primary animate-[nav-reveal_0.45s_cubic-bezier(0.22,1,0.36,1)_both] mt-4 w-full"
-                onClick={() => setOpen(false)}
-              >
-                {t("startProject")}
-                <ArrowUpRight />
-              </Link>
+              {onStart ? null : (
+                <Link
+                  href="/start"
+                  style={{ animationDelay: `${navItems.length * 55}ms` }}
+                  className="btn-primary animate-[nav-reveal_0.45s_cubic-bezier(0.22,1,0.36,1)_both] mt-4 w-full"
+                  onClick={() => setOpen(false)}
+                >
+                  {t("startProject")}
+                  <ArrowRight />
+                </Link>
+              )}
             </nav>
           ) : null}
         </div>
+
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute inset-0 z-30 border border-lilac/30",
+            open ? "rounded-[1.75rem]" : "rounded-full",
+          )}
+        />
       </div>
     </header>
   );

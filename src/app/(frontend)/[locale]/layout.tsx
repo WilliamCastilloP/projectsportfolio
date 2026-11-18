@@ -53,7 +53,12 @@ export default async function LocaleLayout({
         </div>
       </MotionProvider>
       <FooterReveal>
-        <SiteFooter tagline={settings.tagline} socials={settings.socials} />
+        <SiteFooter
+          name={settings.name}
+          tagline={settings.tagline}
+          publicEmail={settings.email}
+          socials={settings.socials}
+        />
       </FooterReveal>
     </NextIntlClientProvider>
   );

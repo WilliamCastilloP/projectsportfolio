@@ -16,6 +16,7 @@
     "ctaLabel": "Hablemos",
     "ctaTitle": "¿Tienes un proyecto en mente?",
     "ctaButton": "Empezar un proyecto",
+    "write": "¿Prefieres escribirnos?",
     "privacy": "Privacidad",
     "terms": "Términos",
     "cookies": "Cookies",
@@ -106,6 +107,7 @@
     "metaTitle": "Servicios",
     "start": "Empezar un proyecto",
     "learnMore": "Saber más",
+    "startWith": "Empezar con {service}",
     "fallbackTitle": "Todo lo que necesitas para",
     "fallbackEmphasis": "mostrarte online.",
     "fallbackIntro": "De la estrategia y el diseño al desarrollo y el lanzamiento — cubrimos todo el camino."
@@ -131,6 +133,9 @@
     "keyPagesTitle": "Una experiencia clara y coherente",
     "deliverables": "Entregables",
     "ogImageAlt": "Caso de estudio: {title}",
+    "wantTitle": "¿Quieres algo así?",
+    "wantBody": "Cuéntanos tu proyecto y respondemos con pasos claros.",
+    "wantLink": "Cuéntanos tu proyecto",
     "filter": {
       "all": "Todos",
       "website": "Sitios web",
@@ -152,7 +157,8 @@
     "eyebrow": "Trabajemos juntos",
     "title": "¿Tienes un proyecto en mente?",
     "body": "Construyamos algo excelente juntos.",
-    "button": "Empezar un proyecto"
+    "button": "Empezar un proyecto",
+    "talk": "Hablemos de tu proyecto"
   },
   "start": {
     "metaTitle": "Empezar un proyecto",

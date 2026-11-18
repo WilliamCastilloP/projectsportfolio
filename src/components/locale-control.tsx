@@ -27,7 +27,7 @@ export function LocaleControl({ variant = "footer" }: { variant?: "footer" | "in
       aria-label={t("label")}
       className={cn(
         "inline-flex gap-1 text-xs",
-        variant === "footer" ? "text-white/50" : "text-faint",
+        variant === "footer" ? "footer-link" : "text-faint",
       )}
     >
       {routing.locales.map((code, i) => (
@@ -38,8 +38,9 @@ export function LocaleControl({ variant = "footer" }: { variant?: "footer" | "in
             disabled={pending}
             onClick={() => select(code as Locale)}
             className={cn(
-              "transition hover:text-white",
-              locale === code && (variant === "footer" ? "text-white" : "text-fg font-medium"),
+              "transition-colors",
+              variant === "footer" ? "hover:text-apricot" : "hover:text-fg",
+              locale === code && (variant === "footer" ? "font-medium text-footer-fg" : "font-medium text-fg"),
             )}
           >
             {t(code)}

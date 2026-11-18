@@ -16,6 +16,7 @@
     "ctaLabel": "Discutons",
     "ctaTitle": "Un projet en tête ?",
     "ctaButton": "Démarrer un projet",
+    "write": "Vous préférez nous écrire ?",
     "privacy": "Confidentialité",
     "terms": "Conditions",
     "cookies": "Cookies",
@@ -106,6 +107,7 @@
     "metaTitle": "Services",
     "start": "Démarrer un projet",
     "learnMore": "En savoir plus",
+    "startWith": "Démarrer avec {service}",
     "fallbackTitle": "Tout ce qu'il faut pour exister",
     "fallbackEmphasis": "en ligne.",
     "fallbackIntro": "De la stratégie et du design au développement et au lancement — nous gérons tout le parcours."
@@ -131,6 +133,9 @@
     "keyPagesTitle": "Une expérience claire et cohérente",
     "deliverables": "Livrables",
     "ogImageAlt": "Étude de cas : {title}",
+    "wantTitle": "Vous voulez quelque chose comme ça ?",
+    "wantBody": "Parlez-nous de votre projet et nous répondrons avec des étapes claires.",
+    "wantLink": "Parlez-nous de votre projet",
     "filter": {
       "all": "Tous",
       "website": "Sites web",
@@ -152,7 +157,8 @@
     "eyebrow": "Travaillons ensemble",
     "title": "Un projet en tête ?",
     "body": "Construisons quelque chose d'excellent ensemble.",
-    "button": "Démarrer un projet"
+    "button": "Démarrer un projet",
+    "talk": "Parlons de votre projet"
   },
   "start": {
     "metaTitle": "Démarrer un projet",

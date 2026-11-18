@@ -16,6 +16,7 @@
     "ctaLabel": "Let's talk",
     "ctaTitle": "Have a project in mind?",
     "ctaButton": "Start a project",
+    "write": "Prefer to write to us?",
     "privacy": "Privacy",
     "terms": "Terms",
     "cookies": "Cookies",
@@ -106,6 +107,7 @@
     "metaTitle": "Services",
     "start": "Start a project",
     "learnMore": "Learn more",
+    "startWith": "Start with {service}",
     "fallbackTitle": "Everything you need to show up",
     "fallbackEmphasis": "online.",
     "fallbackIntro": "From strategy and design to development and launch — we handle the full journey."
@@ -131,6 +133,9 @@
     "keyPagesTitle": "A clean and cohesive experience",
     "deliverables": "Deliverables",
     "ogImageAlt": "Case study: {title}",
+    "wantTitle": "Want something like this?",
+    "wantBody": "Tell us about your project and we'll reply with clear next steps.",
+    "wantLink": "Tell us about your project",
     "filter": {
       "all": "All",
       "website": "Websites",
@@ -152,7 +157,8 @@
     "eyebrow": "Let's work together",
     "title": "Have a project in mind?",
     "body": "Let's build something great together.",
-    "button": "Start a project"
+    "button": "Start a project",
+    "talk": "Let's talk about your project"
   },
   "start": {
     "metaTitle": "Start a project",

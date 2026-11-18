@@ -2,10 +2,9 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { CtaBand } from "@/components/cta-band";
 import { DeviceMockup } from "@/components/device-mockup";
 import { RichText } from "@/components/rich-text";
-import { ArrowUpRight } from "@/components/arrow-icon";
+import { ArrowRight, ArrowUpRight } from "@/components/arrow-icon";
 import { Link } from "@/i18n/navigation";
 import { languageAlternates } from "@/i18n/path";
 import { pageOpenGraph } from "@/lib/metadata";
@@ -164,7 +163,21 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
           </blockquote>
         ) : null}
       </article>
-      <CtaBand />
+      <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+        <div className="flex flex-col items-start justify-between gap-6 rounded-[2rem] bg-brand-soft px-8 py-8 sm:flex-row sm:items-center sm:px-10 sm:py-9">
+          <div className="max-w-xl">
+            <h2 className="serif-display text-3xl text-fg">{t("wantTitle")}</h2>
+            <p className="mt-2 text-muted">{t("wantBody")}</p>
+          </div>
+          <Link
+            href="/start"
+            className="inline-flex shrink-0 items-center gap-1.5 font-medium text-brand underline decoration-brand/40 underline-offset-4 transition-colors hover:decoration-brand"
+          >
+            {t("wantLink")}
+            <ArrowRight />
+          </Link>
+        </div>
+      </section>
     </>
   );
 }

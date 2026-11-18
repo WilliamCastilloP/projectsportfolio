@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CtaBand } from "@/components/cta-band";
-import { ArrowUpRight } from "@/components/arrow-icon";
+import { ArrowRight } from "@/components/arrow-icon";
 import { Link } from "@/i18n/navigation";
 import { languageAlternates } from "@/i18n/path";
 import { getServicesContent } from "@/lib/cms";
@@ -34,8 +34,11 @@ export default async function ServicesPage() {
           </h1>
           <div>
             <p className="text-muted">{data.intro || t("fallbackIntro")}</p>
-            <Link href="/start" className="btn-primary mt-6 inline-flex">
-              {t("start")} <ArrowUpRight />
+            <Link
+              href="/start"
+              className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-brand underline decoration-brand/40 underline-offset-4 transition-colors hover:decoration-brand"
+            >
+              {t("start")} <ArrowRight />
             </Link>
           </div>
         </div>
@@ -62,8 +65,11 @@ export default async function ServicesPage() {
                   </li>
                 ))}
               </ul>
-              <Link href={`/start?service=${item.slug}`} className="btn-outline mt-8 inline-flex text-sm">
-                {t("learnMore")} <ArrowUpRight />
+              <Link
+                href={`/start?service=${item.slug}`}
+                className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-brand underline decoration-brand/40 underline-offset-4 transition-colors hover:decoration-brand"
+              >
+                {t("startWith", { service: item.title })} <ArrowRight />
               </Link>
             </div>
             <div className="flex min-h-[240px] items-center justify-center rounded-3xl bg-elevated p-8 text-6xl text-faint">
