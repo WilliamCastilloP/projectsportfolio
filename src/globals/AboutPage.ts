@@ -11,6 +11,16 @@ export const AboutPage: GlobalConfig = {
   fields: [
     { name: "eyebrow", type: "text", localized: true, label: "Eyebrow" },
     {
+      name: "motto",
+      type: "text",
+      localized: true,
+      label: "Lema",
+      admin: {
+        description:
+          "Visible en la home. Si está vacío, se usa el texto de reserva de la interfaz.",
+      },
+    },
+    {
       name: "hero",
       type: "group",
       label: "Hero",

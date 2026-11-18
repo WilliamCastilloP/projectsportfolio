@@ -773,6 +773,10 @@ export interface ProcessPage {
 export interface AboutPage {
   id: string;
   eyebrow?: string | null;
+  /**
+   * Visible en la home. Si está vacío, se usa el texto de reserva de la interfaz.
+   */
+  motto?: string | null;
   hero?: {
     headlineLines?: string[] | null;
     emphasis?: string | null;
@@ -955,6 +959,7 @@ export interface ProcessPageSelect<T extends boolean = true> {
  */
 export interface AboutPageSelect<T extends boolean = true> {
   eyebrow?: T;
+  motto?: T;
   hero?:
     | T
     | {

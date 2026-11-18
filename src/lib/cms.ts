@@ -54,6 +54,7 @@ export type ProcessContent = {
 
 export type AboutContent = {
   eyebrow: string;
+  motto: string;
   hero: {
     headlineLines: string[];
     emphasis: string;
@@ -272,6 +273,7 @@ export const getAboutContent = cache(async (explicit?: Locale): Promise<AboutCon
     });
     return {
       eyebrow: doc.eyebrow || "ABOUT",
+      motto: doc.motto?.trim() || "",
       hero: {
         headlineLines: doc.hero?.headlineLines?.filter(Boolean) ?? [],
         emphasis: doc.hero?.emphasis || "",
@@ -305,6 +307,7 @@ export const getAboutContent = cache(async (explicit?: Locale): Promise<AboutCon
   } catch {
     return {
       eyebrow: "ABOUT",
+      motto: "",
       hero: { headlineLines: [], emphasis: "", body: "" },
       founder: { name: "", role: "", note: "", bio: "" },
       mission: { eyebrow: "", title: "", body: "" },

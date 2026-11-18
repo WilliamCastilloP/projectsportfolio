@@ -59,7 +59,48 @@
     "learnMore": "Learn more",
     "viewAll": "View all projects",
     "viewCase": "View case study",
-    "wantSomethingLike": "Want something like this?"
+    "wantSomethingLike": "Want something like this?",
+    "customBuilt": {
+      "eyebrow": "Why us",
+      "title": "Custom-built,",
+      "emphasis": "not a template.",
+      "templateLabel": "Template",
+      "customLabel": "Custom",
+      "template1": "The same design as thousands of other sites",
+      "template2": "Your business has to fit the tool",
+      "template3": "Support with generic answers",
+      "template4": "Limited to what the template allows",
+      "custom1": "Design shaped around your brand and audience",
+      "custom2": "The tool adapts to your business",
+      "custom3": "You talk to the people who build it",
+      "custom4": "It grows with you, with no template limits"
+    },
+    "youEdit": {
+      "eyebrow": "Without depending on anyone",
+      "title": "You edit it",
+      "emphasis": "yourself.",
+      "body": "Your team changes copy, photos and pages from a simple panel — no code, and no waiting on anyone.",
+      "cta": "See how it works",
+      "navHome": "Home",
+      "navProjects": "Projects",
+      "navServices": "Services",
+      "navMedia": "Media",
+      "fieldTitle": "Headline",
+      "fieldTitleValue": "Websites that help",
+      "fieldImage": "Image",
+      "fieldChange": "Change",
+      "published": "Published",
+      "save": "Save",
+      "saved": "Changes saved"
+    },
+    "motto": {
+      "eyebrow": "Our motto",
+      "lead": "We work with you,",
+      "emphasis": "not just for you.",
+      "team": "The {name} team",
+      "cta": "Meet the studio",
+      "illustrationAlt": "Two people talking at a work table"
+    }
   },
   "services": {
     "metaTitle": "Services",

@@ -59,7 +59,48 @@
     "learnMore": "Saber más",
     "viewAll": "Ver todos los proyectos",
     "viewCase": "Ver el caso",
-    "wantSomethingLike": "¿Quieres algo así?"
+    "wantSomethingLike": "¿Quieres algo así?",
+    "customBuilt": {
+      "eyebrow": "Por qué nosotros",
+      "title": "Hecho a medida,",
+      "emphasis": "no a plantilla.",
+      "templateLabel": "Plantilla",
+      "customLabel": "A medida",
+      "template1": "El mismo diseño que miles de sitios",
+      "template2": "Tu negocio se adapta a la herramienta",
+      "template3": "Soporte con respuestas genéricas",
+      "template4": "Limitado a lo que la plantilla permite",
+      "custom1": "Diseño pensado para tu marca y tu público",
+      "custom2": "La herramienta se adapta a tu negocio",
+      "custom3": "Hablas con las personas que lo construyen",
+      "custom4": "Crece contigo, sin límites de plantilla"
+    },
+    "youEdit": {
+      "eyebrow": "Sin depender de nadie",
+      "title": "Lo editas",
+      "emphasis": "tú.",
+      "body": "Tu equipo cambia textos, fotos y páginas desde un panel simple, sin tocar código y sin esperar a nadie.",
+      "cta": "Ver cómo funciona",
+      "navHome": "Inicio",
+      "navProjects": "Proyectos",
+      "navServices": "Servicios",
+      "navMedia": "Medios",
+      "fieldTitle": "Titular",
+      "fieldTitleValue": "Sitios web que ayudan",
+      "fieldImage": "Imagen",
+      "fieldChange": "Cambiar",
+      "published": "Publicado",
+      "save": "Guardar",
+      "saved": "Cambios guardados"
+    },
+    "motto": {
+      "eyebrow": "Nuestro lema",
+      "lead": "Trabajamos contigo,",
+      "emphasis": "no solo para ti.",
+      "team": "El equipo de {name}",
+      "cta": "Conocer al estudio",
+      "illustrationAlt": "Dos personas conversando junto a una mesa de trabajo"
+    }
   },
   "services": {
     "metaTitle": "Servicios",
