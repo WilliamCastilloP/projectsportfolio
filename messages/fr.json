@@ -58,7 +58,8 @@
     "exploreServices": "Voir tous les services",
     "learnMore": "En savoir plus",
     "viewAll": "Voir tous les projets",
-    "viewCase": "Voir l'étude de cas"
+    "viewCase": "Voir l'étude de cas",
+    "wantSomethingLike": "Vous voulez quelque chose comme ça ?"
   },
   "services": {
     "metaTitle": "Services",

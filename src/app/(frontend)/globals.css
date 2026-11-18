@@ -164,6 +164,17 @@
     radial-gradient(ellipse 60% 50% at 50% 88%, color-mix(in oklab, var(--apricot) 12%, transparent), transparent 75%);
 }
 
+/** Home hero: aurora continua detrás de la nav (zona superior del viewport). */
+@utility hero-aurora-bg {
+  background-image:
+    radial-gradient(ellipse 120% 85% at 50% -20%, color-mix(in oklab, var(--brand) 12%, transparent), transparent 62%),
+    radial-gradient(ellipse 70% 55% at 12% 8%, color-mix(in oklab, var(--teal) 12%, transparent), transparent 68%),
+    radial-gradient(ellipse 70% 55% at 88% 10%, color-mix(in oklab, var(--brand) 14%, transparent), transparent 68%),
+    radial-gradient(ellipse 85% 55% at 18% 28%, color-mix(in oklab, var(--brand) 16%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 82% 32%, color-mix(in oklab, var(--teal) 14%, transparent), transparent 72%),
+    radial-gradient(ellipse 60% 50% at 50% 90%, color-mix(in oklab, var(--apricot) 12%, transparent), transparent 75%);
+}
+
 @utility grain-overlay {
   @apply pointer-events-none absolute inset-0 opacity-[0.04] mix-blend-soft-light;
 }

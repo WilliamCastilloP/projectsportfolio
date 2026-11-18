@@ -7,7 +7,7 @@ export function HeroEmphasisUnderline() {
 
   return (
     <motion.svg
-      className="pointer-events-none absolute -bottom-1 left-0 h-[0.45em] w-full origin-left text-apricot"
+      className="pointer-events-none absolute left-0 bottom-0 h-[0.32em] w-full origin-left translate-y-[0.08em] text-apricot"
       viewBox="0 0 120 12"
       fill="none"
       aria-hidden

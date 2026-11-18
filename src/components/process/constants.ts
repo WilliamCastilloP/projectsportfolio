@@ -1,9 +1,17 @@
+/**
+ * Reparto de columnas en desktop. Probar en navegador antes de fijar:
+ * - `equal`: 50/50
+ * - `wide-media`: 5/7 (más ancho para la imagen)
+ */
+export const PROCESS_LAYOUT = {
+  columnSplit: "wide-media" as "equal" | "wide-media",
+} as const;
+
 /** Ajustes del scrollytelling. La barra usa `--process-progress` (Teal → Violet en globals.css). */
 export const PROCESS_MOTION = {
   stickyTop: "7rem",
   /** Padding vertical de la sección (arriba = abajo; el contenido final se pega a este pb). */
   sectionPad: "6rem",
-  panelMin: "60vh",
   /** Rango de scroll del panel (opacidad/escala). */
   panelOffset: ["start 0.65", "end 0.35"] as const,
   /**

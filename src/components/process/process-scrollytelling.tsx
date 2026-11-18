@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { useReducedMotion } from "motion/react";
-import { PROCESS_MOTION } from "@/components/process/constants";
+import { PROCESS_LAYOUT, PROCESS_MOTION } from "@/components/process/constants";
+import { cn } from "@/lib/cn";
 import { ProcessNavItem } from "@/components/process/process-nav-item";
 import { ProcessPanel } from "@/components/process/process-panel";
 import type { ProcessContent } from "@/lib/cms";
@@ -72,14 +73,37 @@ export function ProcessScrollytelling({ content }: { content: ProcessContent }) 
   return (
     <section
       id="process"
-      className="scroll-mt-28 mx-4 my-6 rounded-[2rem] bg-dark py-16 text-white sm:mx-6 lg:mx-8 lg:py-[var(--process-pad)]"
+      className="scroll-mt-28 relative isolate mx-4 my-6 rounded-[2rem] bg-dark py-16 text-white sm:mx-6 lg:mx-8 lg:py-[var(--process-pad)]"
       style={{
         ["--process-sticky" as string]: PROCESS_MOTION.stickyTop,
         ["--process-pad" as string]: PROCESS_MOTION.sectionPad,
         ["--process-last-top" as string]: lastTop,
       }}
     >
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_1.6fr] lg:px-10">
+      {/* Decoración recortada aparte: overflow-hidden aquí rompe sticky en hijos */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[2rem]" aria-hidden>
+        <div
+          className="absolute -right-1/4 -top-1/4 h-[min(70vw,32rem)] w-[min(70vw,32rem)] rounded-full opacity-[0.14]"
+          style={{
+            background: `radial-gradient(circle, color-mix(in oklab, var(--brand) 55%, transparent), transparent 70%)`,
+          }}
+        />
+        <div className="grain-overlay">
+          <svg className="h-full w-full">
+            <filter id="process-grain">
+              <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves={3} stitchTiles="stitch" />
+              <feColorMatrix type="saturate" values="0" />
+            </filter>
+            <rect width="100%" height="100%" filter="url(#process-grain)" />
+          </svg>
+        </div>
+      </div>
+      <div
+        className={cn(
+          "relative mx-auto grid max-w-6xl gap-10 px-6 lg:gap-12 lg:px-8",
+          PROCESS_LAYOUT.columnSplit === "equal" ? "lg:grid-cols-2" : "lg:grid-cols-[5fr_7fr]",
+        )}
+      >
         <aside className="hidden self-start lg:sticky lg:top-[var(--process-sticky)] lg:block lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
           <p className="label text-white/45">{content.eyebrow}</p>
           <h2 className="mt-3 serif-display text-title text-balance">

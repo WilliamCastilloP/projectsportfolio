@@ -15,6 +15,12 @@ import { useTranslations } from "next-intl";
 
 const LOOP_DURATION = 7;
 const SPRING_ENTRY = { type: "spring", stiffness: 180, damping: 22, mass: 0.85 } as const;
+/** Suaviza entrada, salida y movimiento del tilt (más bajo = menos “golpe”). */
+const POINTER_SPRING = { stiffness: 72, damping: 26, mass: 1.05 };
+
+function clampPointer(v: number) {
+  return Math.max(-1, Math.min(1, v));
+}
 const FLOAT_TRANSITION: Transition = {
   duration: LOOP_DURATION,
   repeat: Infinity,
@@ -95,7 +101,7 @@ function LandingWindow({ live }: { live: boolean }) {
 
   return (
     <BrowserChrome className="w-full">
-      <div className="space-y-3 bg-surface p-4">
+      <div className="space-y-3.5 bg-surface p-[1.1rem]">
         <div className="flex items-center justify-between gap-2">
           <div className="h-2 w-16 rounded-full bg-faint" />
           <div className="flex gap-1.5">
@@ -130,7 +136,7 @@ function LandingWindow({ live }: { live: boolean }) {
           style={{ transformOrigin: "center" }}
         />
         <motion.div
-          className="mt-2 h-24 w-full rounded-xl opacity-[0.85]"
+          className="mt-2 h-[7.5rem] w-full rounded-xl opacity-[0.85]"
           style={{
             transformOrigin: "center bottom",
             backgroundImage:
@@ -155,7 +161,7 @@ function InventoryWindow({ live }: { live: boolean }) {
 
   return (
     <BrowserChrome className="w-full">
-      <div className="flex min-h-[140px] bg-surface">
+      <div className="flex min-h-[182px] bg-surface">
         <div className="w-[28%] shrink-0 bg-dark" />
         <div className="flex flex-1 flex-col gap-2 p-3">
           {[1, 2, 3].map((row, i) => (
@@ -309,16 +315,18 @@ export function HeroScene() {
   const finePointer = useFinePointerHover();
   const mobile = useMobileViewport();
 
+  const trackRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const inView = useInView(rootRef, { margin: "80px 0px", amount: 0.15 });
   const live = inView && !reduced;
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const springConfig = { stiffness: 140, damping: 24, mass: 0.6 };
-  const tiltX = useSpring(useTransform(mouseY, [-1, 1], [3, -3]), springConfig);
-  const tiltY = useSpring(useTransform(mouseX, [-1, 1], [-3, 3]), springConfig);
+  const pointerXRaw = useMotionValue(0);
+  const pointerYRaw = useMotionValue(0);
+  const pointerX = useSpring(pointerXRaw, POINTER_SPRING);
+  const pointerY = useSpring(pointerYRaw, POINTER_SPRING);
+  const tiltX = useTransform(pointerY, [-1, 1], [3, -3]);
+  const tiltY = useTransform(pointerX, [-1, 1], [-3, 3]);
 
   useEffect(() => {
     const section = rootRef.current?.closest("section");
@@ -339,54 +347,57 @@ export function HeroScene() {
   const scrollShop = useTransform(scrollYProgress, (p) => (parallaxOn ? p * -22 : 0));
   const scrollCards = useTransform(scrollYProgress, (p) => (parallaxOn ? p * -12 : 0));
 
-  const ptrInvX = useTransform(mouseX, (v) => (parallaxOn && finePointer ? v * 8 : 0));
-  const ptrLandX = useTransform(mouseX, (v) => (parallaxOn && finePointer ? v * 12 : 0));
-  const ptrShopX = useTransform(mouseX, (v) => (parallaxOn && finePointer ? v * 10 : 0));
-  const ptrInvY = useTransform(mouseY, (v) => (parallaxOn && finePointer ? v * 6 : 0));
-  const ptrLandY = useTransform(mouseY, (v) => (parallaxOn && finePointer ? v * 10 : 0));
-  const ptrShopY = useTransform(mouseY, (v) => (parallaxOn && finePointer ? v * 8 : 0));
+  const ptrInvX = useTransform(pointerX, (v) => (parallaxOn && finePointer ? v * 8 : 0));
+  const ptrLandX = useTransform(pointerX, (v) => (parallaxOn && finePointer ? v * 12 : 0));
+  const ptrShopX = useTransform(pointerX, (v) => (parallaxOn && finePointer ? v * 10 : 0));
+  const ptrInvY = useTransform(pointerY, (v) => (parallaxOn && finePointer ? v * 6 : 0));
+  const ptrLandY = useTransform(pointerY, (v) => (parallaxOn && finePointer ? v * 10 : 0));
+  const ptrShopY = useTransform(pointerY, (v) => (parallaxOn && finePointer ? v * 8 : 0));
 
   const invY = useTransform([scrollInventory, ptrInvY], ([s, p]) => Number(s) + Number(p));
   const landY = useTransform([scrollLanding, ptrLandY], ([s, p]) => Number(s) + Number(p));
   const shopY = useTransform([scrollShop, ptrShopY], ([s, p]) => Number(s) + Number(p));
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (!finePointer || reduced || mobile || !rootRef.current) return;
-    const rect = rootRef.current.getBoundingClientRect();
+    if (!finePointer || reduced || mobile || !trackRef.current) return;
+    const rect = trackRef.current.getBoundingClientRect();
     const nx = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
     const ny = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
-    mouseX.set(nx);
-    mouseY.set(ny);
+    pointerXRaw.set(clampPointer(nx));
+    pointerYRaw.set(clampPointer(ny));
   };
 
-  const handlePointerLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
+  const releasePointer = () => {
+    pointerXRaw.set(0);
+    pointerYRaw.set(0);
   };
 
   const enableFloat = !mobile && !reduced;
 
+  const tiltOn = finePointer && !reduced && !mobile;
+
   return (
-    <motion.div
-      ref={rootRef}
-      aria-hidden
-      className="relative mx-auto w-full max-w-4xl select-none max-md:pointer-events-none md:pointer-events-auto"
+    <div
+      ref={trackRef}
+      className="relative -mx-3 w-[calc(100%+1.5rem)] px-3 py-8 sm:-mx-4 sm:w-[calc(100%+2rem)] sm:px-4 sm:py-10 max-md:pointer-events-none md:cursor-default"
       onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      style={
-        finePointer && !reduced && !mobile
-          ? { rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 }
-          : undefined
-      }
+      onPointerLeave={releasePointer}
+      onPointerCancel={releasePointer}
     >
-      <div className="relative mx-auto h-[200px] max-md:max-h-[min(220px,32svh)] sm:h-[260px] md:h-[320px] lg:h-[360px]">
+      <motion.div
+        ref={rootRef}
+        aria-hidden
+        className="pointer-events-none relative mx-auto w-full select-none"
+        style={tiltOn ? { rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 } : undefined}
+      >
+        <div className="relative mx-auto h-[260px] max-md:max-h-[min(286px,38svh)] sm:h-[340px] md:h-[420px] lg:h-[470px]">
         <WindowLayer
           enterIndex={0}
           baseRotate={-4}
           reduced={reduced}
           scrollY={invY}
           pointerX={ptrInvX}
-          className="absolute left-0 top-[18%] z-10 w-[44%] max-md:left-[-18%] max-md:top-[22%] max-md:w-[42%] max-md:opacity-90 md:left-[2%] md:w-[38%] lg:left-[4%]"
+          className="absolute left-0 top-[14%] z-10 w-[48%] max-md:left-[-14%] max-md:top-[20%] max-md:w-[46%] max-md:opacity-95 md:left-[-2%] md:w-[46%] lg:left-[-4%] lg:w-[44%]"
         >
           <InventoryWindow live={live} />
         </WindowLayer>
@@ -397,7 +408,7 @@ export function HeroScene() {
           reduced={reduced}
           scrollY={shopY}
           pointerX={ptrShopX}
-          className="absolute right-0 top-[20%] z-10 w-[44%] max-md:right-[-18%] max-md:top-[24%] max-md:w-[42%] max-md:opacity-90 md:right-[2%] md:w-[38%]"
+          className="absolute right-0 top-[16%] z-10 w-[48%] max-md:right-[-14%] max-md:top-[22%] max-md:w-[46%] max-md:opacity-95 md:right-[-2%] md:w-[46%] lg:right-[-4%] lg:w-[44%]"
         >
           <ShopWindow live={live} />
         </WindowLayer>
@@ -408,7 +419,7 @@ export function HeroScene() {
           reduced={reduced}
           scrollY={landY}
           pointerX={ptrLandX}
-          className="absolute left-1/2 top-0 z-20 w-[min(92%,420px)] -translate-x-1/2 md:w-[min(78%,440px)]"
+          className="absolute left-1/2 top-0 z-20 w-[min(54%,460px)] -translate-x-1/2 sm:w-[min(52%,480px)] md:w-[min(48%,500px)]"
         >
           <LandingWindow live={live} />
         </WindowLayer>
@@ -432,11 +443,11 @@ export function HeroScene() {
                   : { ...SPRING_ENTRY, delay: 0.55 }
             }
           >
-            <div className="card-layered flex flex-col gap-2 px-4 py-3 shadow-none hover:transform-none hover:border-lilac/30">
+            <div className="card-layered flex flex-col gap-2.5 px-5 py-3.5 text-[1.05rem] shadow-none hover:transform-none hover:border-lilac/30">
               <span className="label text-faint">{t("palette")}</span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 {PALETTE_SWATCHES.map((swatch) => (
-                  <span key={swatch} className={`size-3.5 rounded-full ${swatch} ring-1 ring-lilac/25`} />
+                  <span key={swatch} className={`size-4 rounded-full ${swatch} ring-1 ring-lilac/25`} />
                 ))}
               </div>
             </div>
@@ -462,8 +473,8 @@ export function HeroScene() {
                   : { ...SPRING_ENTRY, delay: 0.65 }
             }
           >
-            <div className="card-layered px-4 py-3 shadow-none hover:transform-none hover:border-lilac/30">
-              <span className="serif-display text-2xl leading-none text-ink">Aa</span>
+            <div className="card-layered px-5 py-3.5 shadow-none hover:transform-none hover:border-lilac/30">
+              <span className="serif-display text-3xl leading-none text-ink">Aa</span>
               <span className="label mt-1 block text-faint">{t("typography")}</span>
             </div>
           </motion.div>
@@ -475,11 +486,12 @@ export function HeroScene() {
           animate={{ opacity: 1, scale: 1, rotate: 6 }}
           transition={reduced ? { duration: 0 } : { ...SPRING_ENTRY, delay: 0.75 }}
         >
-          <div className="rounded-sm bg-apricot px-4 py-3 shadow-md shadow-ink/10">
-            <p className="serif-display max-w-[7rem] text-sm italic leading-snug text-ink">{t("stickyNote")}</p>
+          <div className="rounded-sm bg-apricot px-5 py-3.5 shadow-md shadow-ink/10">
+            <p className="serif-display max-w-[9rem] text-base italic leading-snug text-ink">{t("stickyNote")}</p>
           </div>
         </motion.div>
-      </div>
-    </motion.div>
+        </div>
+      </motion.div>
+    </div>
   );
 }

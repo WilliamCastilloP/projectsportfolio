@@ -5,14 +5,15 @@ import { HomeFeaturedWork } from "@/components/home/home-featured-work";
 import { HomeHero } from "@/components/home/home-hero";
 import { HomeServicesPreview } from "@/components/home/home-services-preview";
 import { getHomeContent, getServicesContent } from "@/lib/cms";
-import { getFeaturedProject } from "@/lib/projects";
+import { getAllProjects } from "@/lib/projects";
 
 export default async function HomePage() {
-  const [home, services, featured] = await Promise.all([
+  const [home, services, allProjects] = await Promise.all([
     getHomeContent(),
     getServicesContent(),
-    getFeaturedProject(),
+    getAllProjects(),
   ]);
+  const recentProjects = allProjects.slice(0, 3);
 
   return (
     <>
@@ -21,7 +22,7 @@ export default async function HomePage() {
         <HomeServicesPreview teaser={home.servicesTeaser} intro={services.intro} items={services.items} />
       </ScrollReveal>
       <ScrollReveal delay={120}>
-        <HomeFeaturedWork teaser={home.workTeaser} project={featured} />
+        <HomeFeaturedWork teaser={home.workTeaser} projects={recentProjects} />
       </ScrollReveal>
       <ProcessSection />
       <CtaBand />

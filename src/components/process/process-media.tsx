@@ -63,7 +63,7 @@ export function ProcessMedia({
         fill
         unoptimized
         priority={priority}
-        sizes="(min-width: 1024px) 58vw, 100vw"
+        sizes="(min-width: 1024px) 44vw, 100vw"
         className="object-cover"
       />
     );

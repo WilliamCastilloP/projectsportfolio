@@ -48,9 +48,13 @@ export function ProcessNavItem({
         type="button"
         aria-current={active ? "step" : undefined}
         onClick={() => target.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "center" })}
-        className="w-full rounded-xl py-3 text-left outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+        className={cn(
+          "w-full rounded-xl py-3 pl-3 text-left outline-none transition-colors",
+          active && "border-l-2 border-brand bg-white/[0.04]",
+          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand",
+        )}
       >
-        <span className="label text-white/45">{step.number}</span>
+        <span className={cn("label", active ? "text-teal" : "text-white/45")}>{step.number}</span>
         <span className={cn("mt-1 block text-lg", active ? "text-white" : "text-white/55")}>{step.title}</span>
         <div
           className={cn(
