@@ -24,7 +24,13 @@ export const ServicesPage: GlobalConfig = {
         { name: "subtitle", type: "text" },
         { name: "body", type: "textarea", required: true },
         { name: "bullets", type: "text", hasMany: true },
-        { name: "illustration", type: "text", admin: { description: "Clave en /public/illustrations/services/" } },
+        {
+          name: "illustration",
+          type: "text",
+          admin: {
+            description: "Clave de ilustración: web-design, development, ecommerce, digital-presence.",
+          },
+        },
         { name: "order", type: "number", defaultValue: 1 },
       ],
     },

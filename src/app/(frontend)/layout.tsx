@@ -5,6 +5,7 @@ import { Playfair_Display } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import { languageAlternates } from "@/i18n/path";
 import { isIndexable, pageOpenGraph } from "@/lib/metadata";
+import { ogPalette } from "@/lib/og-palette";
 import { getSettings } from "@/lib/site";
 import "./globals.css";
 
@@ -46,7 +47,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const viewport: Viewport = {
   colorScheme: "light",
-  themeColor: "#faf8f5",
+  themeColor: ogPalette.bg,
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

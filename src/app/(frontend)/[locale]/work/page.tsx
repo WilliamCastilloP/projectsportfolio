@@ -28,7 +28,7 @@ export default async function WorkPage() {
         <p className="label text-faint">{t("eyebrow")}</p>
         <div className="mt-6 grid gap-8 lg:grid-cols-2 lg:items-end">
           <h1 className="serif-display text-title">
-            {t("headline")} <span className="italic">{t("headlineEmphasis")}</span>
+            {t("headline")} <span className="italic text-brand">{t("headlineEmphasis")}</span>
           </h1>
           <p className="text-muted">{t("intro")}</p>
         </div>

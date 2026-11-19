@@ -5,6 +5,7 @@ import { CtaBand } from "@/components/cta-band";
 import { ArrowUpRight } from "@/components/arrow-icon";
 import { ValueIcon } from "@/components/value-icon";
 import { Link } from "@/i18n/navigation";
+import { cn } from "@/lib/cn";
 import { languageAlternates } from "@/i18n/path";
 import { getAboutContent } from "@/lib/cms";
 import { pageOpenGraph } from "@/lib/metadata";
@@ -37,7 +38,7 @@ export default async function AboutPage() {
                 {line}
               </span>
             ))}
-            <span className="italic">{about.hero.emphasis}</span>
+            <span className="italic text-brand">{about.hero.emphasis}</span>
           </h1>
           <p className="mt-6 text-muted">{about.hero.body || t("fallbackIntro")}</p>
           <Link href="/start" className="btn-primary mt-8 inline-flex">
@@ -82,9 +83,14 @@ export default async function AboutPage() {
         <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8">
           <p className="label text-center text-faint">{t("values")}</p>
           <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {about.values.map((v) => (
+            {about.values.map((v, index) => (
               <div key={v.title} className="text-center">
-                <div className="mx-auto flex size-14 items-center justify-center rounded-full border border-line bg-elevated text-lg">
+                <div
+                  className={cn(
+                    "mx-auto flex size-14 items-center justify-center rounded-full text-ink",
+                    index % 2 === 0 ? "bg-teal-soft" : "bg-apricot-soft",
+                  )}
+                >
                   <ValueIcon name={v.icon} />
                 </div>
                 <h3 className="mt-4 font-medium">{v.title}</h3>

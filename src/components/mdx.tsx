@@ -37,7 +37,7 @@ export function Figure({
 /** `<Note />` — a single accented aside. Use it sparingly. */
 export function Note({ children }: { children: React.ReactNode }) {
   return (
-    <aside className="my-8 border-l-2 border-accent/60 bg-surface py-4 pr-4 pl-5 text-sm leading-relaxed text-muted">
+    <aside className="my-8 border-l-2 border-teal bg-surface py-4 pr-4 pl-5 text-sm leading-relaxed text-muted">
       {children}
     </aside>
   );

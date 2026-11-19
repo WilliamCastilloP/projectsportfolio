@@ -105,12 +105,12 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/45 p-4 backdrop-blur-[6px]">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/45 p-4 backdrop-blur-[6px]">
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="lang-modal-title"
-        className="relative w-full max-w-[36rem] overflow-hidden rounded-[1.75rem] bg-surface px-8 py-10 shadow-[0_40px_80px_color-mix(in_oklab,var(--ink)_28%,transparent)] sm:px-12 sm:py-12"
+        className="relative w-full max-w-[36rem] overflow-hidden rounded-[1.75rem] border border-lilac/30 bg-surface px-8 py-10 shadow-[0_40px_80px_color-mix(in_oklab,var(--ink)_28%,transparent)] sm:px-12 sm:py-12"
       >
         <button
           type="button"
@@ -125,7 +125,13 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
         </p>
         <div
           ref={viewportRef}
-          className="relative -mx-8 mt-8 h-[4.75rem] w-[calc(100%+4rem)] overflow-hidden [-webkit-mask-image:linear-gradient(to_right,transparent,black_16%,black_84%,transparent)] [mask-image:linear-gradient(to_right,transparent,black_16%,black_84%,transparent)] sm:-mx-12 sm:w-[calc(100%+6rem)]"
+          className="relative -mx-8 mt-8 h-[4.75rem] w-[calc(100%+4rem)] overflow-hidden sm:-mx-12 sm:w-[calc(100%+6rem)]"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent, var(--mask-solid) 16%, var(--mask-solid) 84%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, var(--mask-solid) 16%, var(--mask-solid) 84%, transparent)",
+          }}
         >
           <div className="pointer-events-none absolute -left-[9999px] top-0" aria-hidden>
             {greetings.map((greeting, index) => (
@@ -167,7 +173,7 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
                     {greeting.text}
                   </span>
                   <span
-                    className={cn("mt-2 h-px w-10", active ? "bg-fg/40" : "bg-transparent")}
+                    className={cn("mt-2 h-px w-10", active ? "bg-brand" : "bg-transparent")}
                     aria-hidden
                   />
                 </span>
@@ -190,8 +196,8 @@ export function LanguageModal({ defaultOpen = false }: { defaultOpen?: boolean }
                 className={cn(
                   "flex size-[5.25rem] items-center justify-center rounded-full transition",
                   suggested === code
-                    ? "bg-line ring-1 ring-lilac/25"
-                    : "bg-elevated hover:bg-line",
+                    ? "bg-brand-soft ring-1 ring-brand/40"
+                    : "bg-elevated hover:bg-brand-soft",
                 )}
               >
                 <LocaleFlag locale={code} className="size-11" />

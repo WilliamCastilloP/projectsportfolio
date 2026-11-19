@@ -19,7 +19,7 @@ export function DeviceMockup({
       <div className="w-[82%]">
         <div className="rounded-t-[0.9rem] rounded-b-[0.3rem] bg-mockup-laptop px-[0.4rem] pt-2 pb-[0.4rem] shadow-[0_22px_50px_color-mix(in_oklab,var(--ink)_14%,transparent)]">
           <div className="mx-auto mb-1.5 size-1.5 rounded-full bg-mockup-laptop-dot" />
-          <div className="aspect-[16/10] overflow-hidden rounded-[0.3rem] bg-black">
+          <div className="aspect-[16/10] overflow-hidden rounded-[0.3rem] bg-mockup-laptop">
             {desktopSrc ? (
               <Image
                 src={desktopSrc}
@@ -33,7 +33,7 @@ export function DeviceMockup({
           </div>
         </div>
         <div className="relative -mx-6 h-2.5 rounded-b-xl bg-gradient-to-b from-mockup-hinge-hi via-mockup-hinge-mid to-mockup-hinge-lo shadow-[0_12px_24px_color-mix(in_oklab,var(--ink)_18%,transparent)]">
-          <div className="absolute inset-x-0 top-0 h-px bg-white/35" />
+          <div className="absolute inset-x-0 top-0 h-px bg-mockup-sheen" />
           <div className="absolute top-0 left-1/2 h-1 w-16 -translate-x-1/2 rounded-b-md bg-mockup-trackpad" />
         </div>
       </div>
@@ -41,8 +41,8 @@ export function DeviceMockup({
       {phoneSrc ? (
         <div className="absolute bottom-0 left-[78%] z-10 w-[23%]">
           <div className="rounded-[1.3rem] bg-mockup-phone p-[3px] shadow-[0_16px_36px_color-mix(in_oklab,var(--ink)_24%,transparent)]">
-            <div className="relative aspect-[390/844] overflow-hidden rounded-[1.12rem] bg-black">
-              <span className="absolute top-1.5 left-1/2 z-10 h-[10px] w-[22%] -translate-x-1/2 rounded-full bg-black" />
+            <div className="relative aspect-[390/844] overflow-hidden rounded-[1.12rem] bg-mockup-phone">
+              <span className="absolute top-1.5 left-1/2 z-10 h-[10px] w-[22%] -translate-x-1/2 rounded-full bg-mockup-phone" />
               <Image
                 src={phoneSrc}
                 alt=""

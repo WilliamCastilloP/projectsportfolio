@@ -39,8 +39,8 @@ export function LocaleControl({ variant = "footer" }: { variant?: "footer" | "in
             onClick={() => select(code as Locale)}
             className={cn(
               "transition-colors",
-              variant === "footer" ? "hover:text-apricot" : "hover:text-fg",
-              locale === code && (variant === "footer" ? "font-medium text-footer-fg" : "font-medium text-fg"),
+              variant === "footer" ? "hover:text-apricot" : "hover:text-brand",
+              locale === code && (variant === "footer" ? "font-medium text-footer-fg" : "font-medium text-brand"),
             )}
           >
             {t(code)}

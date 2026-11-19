@@ -23,6 +23,9 @@ type FormState = {
   description: string;
 };
 
+const fieldClass =
+  "w-full rounded-xl border border-lilac/50 bg-bg px-4 py-3 text-sm text-ink transition-colors focus-visible:border-brand";
+
 const projectTypes = ["new-website", "redesign", "ecommerce", "other"] as const;
 const stages = ["idea", "ready", "existing"] as const;
 const timelines = ["asap", "1-3", "3-6", "6plus"] as const;
@@ -83,8 +86,13 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
 
   if (done) {
     return (
-      <div className="rounded-3xl border border-line bg-surface p-8 text-center">
-        <h2 className="serif-display text-2xl">{t("successTitle")}</h2>
+      <div role="status" className="rounded-3xl border border-teal/35 bg-teal-soft p-8 text-center">
+        <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-teal text-ink" aria-hidden>
+          <svg viewBox="0 0 16 16" className="size-6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3.5 8.2 6.4 11 12.5 4.8" />
+          </svg>
+        </span>
+        <h2 className="serif-display mt-4 text-2xl text-ink">{t("successTitle")}</h2>
         <p className="mt-3 text-muted">{t("successBody")}</p>
         <div className="mt-8 flex flex-col items-center gap-4">
           <p className="max-w-sm text-sm text-balance text-fg">{shareText}</p>
@@ -95,14 +103,19 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
   }
 
   return (
-    <div className="rounded-3xl border border-line bg-surface p-6 sm:p-8">
-      <div className="mb-8 flex gap-2 text-xs font-medium">
+    <div
+      className={cn(
+        "rounded-3xl border bg-surface p-6 sm:p-8",
+        error ? "border-error" : "border-lilac/40",
+      )}
+    >
+      <div className="mb-8 flex flex-wrap gap-2 text-xs font-medium">
         {[1, 2, 3].map((n) => (
           <span
             key={n}
             className={cn(
               "rounded-full px-3 py-1",
-              step === n ? "bg-fg text-surface" : "bg-elevated text-muted",
+              step === n ? "bg-brand text-white" : "border border-lilac/50 text-muted",
             )}
           >
             {n}. {t(`steps.${n}`)}
@@ -120,9 +133,12 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
                   key={type}
                   type="button"
                   onClick={() => update("projectType", type)}
+                  aria-pressed={form.projectType === type}
                   className={cn(
-                    "rounded-2xl border p-4 text-left text-sm transition",
-                    form.projectType === type ? "border-fg bg-elevated" : "border-line hover:border-fg/30",
+                    "rounded-2xl border p-4 text-left text-sm text-ink transition-colors",
+                    form.projectType === type
+                      ? "border-brand bg-brand-soft"
+                      : "border-lilac/50 bg-bg hover:border-brand/35 hover:bg-brand-soft",
                   )}
                 >
                   {t(`projectType.${type}`)}
@@ -141,9 +157,12 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
                   key={stage}
                   type="button"
                   onClick={() => update("stage", stage)}
+                  aria-pressed={form.stage === stage}
                   className={cn(
-                    "rounded-2xl border p-4 text-sm transition",
-                    form.stage === stage ? "border-fg bg-elevated" : "border-line",
+                    "rounded-2xl border p-4 text-sm text-ink transition-colors",
+                    form.stage === stage
+                      ? "border-brand bg-brand-soft"
+                      : "border-lilac/50 bg-bg hover:border-brand/35 hover:bg-brand-soft",
                   )}
                 >
                   {t(`stage.${stage}`)}
@@ -153,7 +172,7 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
             <label className="block">
               <span className="text-sm text-muted">{t("q3")}</span>
               <select
-                className="mt-2 w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm"
+                className={cn(fieldClass, "mt-2")}
                 value={form.timeline}
                 onChange={(e) => update("timeline", e.target.value)}
               >
@@ -173,27 +192,27 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
             <h2 className="font-medium">{t("q4")}</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <input
-                className="rounded-xl border border-line px-4 py-3 text-sm"
+                className={fieldClass}
                 placeholder={t("name")}
                 value={form.name}
                 onChange={(e) => update("name", e.target.value)}
               />
               <input
                 type="email"
-                className="rounded-xl border border-line px-4 py-3 text-sm"
+                className={fieldClass}
                 placeholder={t("email")}
                 value={form.email}
                 onChange={(e) => update("email", e.target.value)}
               />
             </div>
             <input
-              className="w-full rounded-xl border border-line px-4 py-3 text-sm"
+              className={fieldClass}
               placeholder={t("company")}
               value={form.company}
               onChange={(e) => update("company", e.target.value)}
             />
             <textarea
-              className="min-h-[120px] w-full rounded-xl border border-line px-4 py-3 text-sm"
+              className={cn(fieldClass, "min-h-[120px]")}
               placeholder={t("description")}
               value={form.description}
               onChange={(e) => update("description", e.target.value)}
@@ -202,7 +221,11 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
         ) : null}
       </div>
 
-      {error ? <p className="mt-4 text-sm text-error">{error}</p> : null}
+      {error ? (
+        <p role="alert" className="mt-4 text-sm text-error">
+          {error}
+        </p>
+      ) : null}
 
       <div className="mt-8 flex justify-between gap-3">
         {step > 1 ? (

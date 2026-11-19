@@ -175,8 +175,8 @@ export function SiteNav() {
             className="absolute inset-y-0 right-0 overflow-hidden"
             style={{
               width: "var(--cta-w)",
-              maskImage: "linear-gradient(to right, transparent var(--nav-r), #000 var(--nav-r))",
-              WebkitMaskImage: "linear-gradient(to right, transparent var(--nav-r), #000 var(--nav-r))",
+              maskImage: "linear-gradient(to right, transparent var(--nav-r), var(--mask-solid) var(--nav-r))",
+              WebkitMaskImage: "linear-gradient(to right, transparent var(--nav-r), var(--mask-solid) var(--nav-r))",
             }}
           >
             <div className={cn("ml-[calc(100%-100cqi)] h-full w-[100cqi] rounded-full bg-bg/80", glass)} />
@@ -187,9 +187,9 @@ export function SiteNav() {
             style={{
               width: "var(--cta-w)",
               maskImage:
-                "radial-gradient(circle at 0 50%, transparent var(--nav-r), #000 calc(var(--nav-r) + 0.5px))",
+                "radial-gradient(circle at 0 50%, transparent var(--nav-r), var(--mask-solid) calc(var(--nav-r) + 0.5px))",
               WebkitMaskImage:
-                "radial-gradient(circle at 0 50%, transparent var(--nav-r), #000 calc(var(--nav-r) + 0.5px))",
+                "radial-gradient(circle at 0 50%, transparent var(--nav-r), var(--mask-solid) calc(var(--nav-r) + 0.5px))",
             }}
           >
           <Link

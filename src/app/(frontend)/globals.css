@@ -39,6 +39,7 @@
   --color-mockup-hinge-lo: var(--mockup-hinge-lo);
   --color-mockup-trackpad: var(--mockup-trackpad);
   --color-mockup-phone: var(--mockup-phone);
+  --color-mockup-sheen: var(--mockup-sheen);
 
   --text-display: clamp(2.5rem, 6vw, 4.5rem);
   --text-display--line-height: 1.05;
@@ -97,6 +98,10 @@
     --mockup-hinge-lo: #6a7078;
     --mockup-trackpad: #555b63;
     --mockup-phone: #0c0c0e;
+    --mockup-sheen: color-mix(in oklab, white 35%, transparent);
+
+    /* Opaco puro para máscaras CSS. No es un color de marca. */
+    --mask-solid: #000;
 
     --shell-shadow: 0 28px 80px color-mix(in oklab, var(--ink) 22%, transparent);
   }
@@ -233,15 +238,28 @@
   }
 
   .rich-text {
-    @apply space-y-4 text-muted leading-relaxed;
+    @apply text-muted leading-relaxed;
+  }
+
+  .rich-text :where(p, ul, ol, blockquote, pre) + :where(p, ul, ol, blockquote, pre) {
+    margin-top: 1rem;
   }
 
   .rich-text h2 {
-    @apply serif-display mt-8 text-2xl text-fg;
+    @apply serif-display text-2xl text-fg;
+    margin-top: 3rem;
+    margin-bottom: 0.75rem;
   }
 
   .rich-text h3 {
-    @apply mt-6 text-lg font-medium text-fg;
+    @apply text-lg font-medium text-fg;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rich-text h2:first-child,
+  .rich-text h3:first-child {
+    margin-top: 0;
   }
 
   .rich-text ul {

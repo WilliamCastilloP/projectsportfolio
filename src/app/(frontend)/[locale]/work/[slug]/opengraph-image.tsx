@@ -37,14 +37,18 @@ export async function generateImageMetadata({ params }: { params: Params | Promi
 export default async function ProjectOpengraphImage({ params }: { params: Promise<Params> }) {
   const { locale, slug } = await params;
   const lang = toLocale(locale);
-  const [project, settings] = await Promise.all([getProject(slug, lang), getSettings(lang)]);
+  const [project, settings, t] = await Promise.all([
+    getProject(slug, lang),
+    getSettings(lang),
+    getTranslations({ locale: lang, namespace: "work" }),
+  ]);
 
   if (!project) notFound();
 
   return new ImageResponse(
     (
       <OgFrame
-        eyebrow={`${settings.name} / ${lang === "es" ? "Trabajo" : "Work"}`}
+        eyebrow={`${settings.name} / ${t("all")}`}
         title={project.title}
         description={project.description}
         footer={`${project.year} · ${project.stack.slice(0, 4).join(" · ")}`}

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { CheckMark } from "@/components/check-mark";
 import { DeviceMockup } from "@/components/device-mockup";
 import { RichText } from "@/components/rich-text";
 import { ShareButton } from "@/components/share-button";
@@ -43,8 +44,9 @@ function DeliverableList({ items }: { items: string[] }) {
   return (
     <ul className="space-y-2 text-sm text-muted">
       {items.map((d) => (
-        <li key={d} className="flex gap-2">
-          <span aria-hidden>✓</span> {d}
+        <li key={d} className="flex gap-3">
+          <CheckMark />
+          <span>{d}</span>
         </li>
       ))}
     </ul>
@@ -66,7 +68,6 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
   const meta = [
     { label: t("client"), value: project.client },
     { label: t("industry"), value: project.industry },
-    { label: t("services"), value: project.servicesOffered.join(", ") },
     { label: t("platform"), value: project.platform },
     { label: t("year"), value: String(project.year) },
   ].filter((m) => m.value);
@@ -78,9 +79,15 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
           ← {t("back")}
         </Link>
         {project.categories.length > 0 ? (
-          <p className="label mt-8 text-faint">{project.categories.map((c) => t(`filter.${c}`)).join(" · ")}</p>
+          <ul className="mt-8 flex flex-wrap gap-2">
+            {project.categories.map((c) => (
+              <li key={c} className="rounded-full bg-apricot-soft px-3 py-1 text-sm font-medium text-ink">
+                {t(`filter.${c}`)}
+              </li>
+            ))}
+          </ul>
         ) : null}
-        <h1 className={`${project.categories.length > 0 ? "mt-3" : "mt-8"} serif-display text-title`}>
+        <h1 className={`${project.categories.length > 0 ? "mt-4" : "mt-8"} serif-display text-title`}>
           {project.title}
         </h1>
         <p className="mt-4 max-w-2xl text-muted">{project.description}</p>
@@ -98,7 +105,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
           />
         </div>
 
-        <div className="mt-12">
+        <div className="mt-12 rounded-[2rem] bg-brand-soft px-4 py-10 sm:px-10 sm:py-14">
           <DeviceMockup
             desktopSrc={project.desktopImage || project.cover}
             mobileSrc={project.mobileImage}
@@ -107,7 +114,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
         </div>
 
         {meta.length > 0 ? (
-          <dl className="mt-12 grid gap-4 border-y border-line py-8 sm:grid-cols-5">
+          <dl className="mt-12 grid gap-4 border-y border-line py-8 sm:grid-cols-4">
             {meta.map((m) => (
               <div key={m.label}>
                 <dt className="label text-faint">{m.label}</dt>
@@ -115,6 +122,19 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
               </div>
             ))}
           </dl>
+        ) : null}
+
+        {project.servicesOffered.length > 0 ? (
+          <div className="mt-8">
+            <p className="label text-faint">{t("services")}</p>
+            <ul className="mt-3 flex flex-wrap gap-2">
+              {project.servicesOffered.map((service) => (
+                <li key={service} className="rounded-full bg-teal-soft px-3 py-1 text-sm font-medium text-ink">
+                  {service}
+                </li>
+              ))}
+            </ul>
+          </div>
         ) : null}
 
         {/* El body trae sus propios titulares; challenge y solution lo resumen y solo se pintan si no hay body. */}
@@ -157,7 +177,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
             <h2 className="mt-3 serif-display text-3xl">{t("keyPagesTitle")}</h2>
             <div className="mt-10 grid gap-6 sm:grid-cols-3">
               {project.keyPages.map((page) => (
-                <figure key={page.title} className="rounded-2xl border border-line bg-elevated p-4">
+                <figure key={page.title} className="card-layered p-4">
                   {page.image ? (
                     <Image src={page.image} alt="" width={400} height={300} unoptimized className="rounded-lg" />
                   ) : null}
@@ -170,7 +190,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
         ) : null}
 
         {project.testimonial ? (
-          <blockquote className="mt-20 border-l-2 border-fg pl-6">
+          <blockquote className="mt-20 border-l-2 border-teal pl-6">
             <p className="serif-display text-2xl italic">&ldquo;{project.testimonial.quote}&rdquo;</p>
             <footer className="mt-4 text-sm text-muted">
               — {project.testimonial.author}
