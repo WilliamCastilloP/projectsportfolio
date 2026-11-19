@@ -16,18 +16,22 @@ Este archivo es la fuente de verdad para un agente. `README.md` y `docs/plans/st
 
 ## Qué ve el visitante
 
-Registro visual **claro editorial**, no dark-only. Lienzo crema (`--bg: #faf8f5`), texto casi negro, serif Playfair en titulares (`serif-display`), Geist Sans en cuerpo y labels, Geist Mono disponible. El footer es una lámina negra fija; el contenido vive en `.site-shell` (fondo claro, esquinas inferiores redondas) que se desliza por encima. `color-scheme: light`. No hay toggle de tema en el shell vivo.
+Registro visual **claro editorial**, no dark-only. Lienzo crema (`--bg: #faf8f5`), texto Shadow Grey (`--ink: #2c2c34`), serif Playfair en titulares (`serif-display`), Geist Sans en cuerpo y labels, Geist Mono disponible. El acento de acción es Blue Violet (`--brand: #8236d3`). El footer es una lámina oscura fija (`--color-dark`, el mismo ink); el contenido vive en `.site-shell` (fondo crema, esquinas inferiores redondas) que se desliza por encima. `color-scheme: light`. No hay toggle de tema en el shell vivo.
 
 Home (`src/app/(frontend)/[locale]/page.tsx`), de arriba abajo:
 
-1. `HomeHero` — titular, intro, notas flotantes, CTAs
-2. `HomeStats` — cifras de `settings.stats`
-3. `HomeServicesPreview` — teaser + ítems de servicios
-4. `HomeFeaturedWork` — un caso destacado
-5. `ProcessSection` — scrollytelling anclado en `#process`
-6. `CtaBand` — llamada a `/start`
+1. `HomeHero` — server: titular, intro, pastilla de disponibilidad y CTAs. `HeroScene` (client) es la mesa de trabajo.
+2. `HomeServicesPreview` — bento (1 card grande + 3 pequeñas) hacia `/services#<slug>`.
+3. `HomeFeaturedWork` — hasta 3 proyectos publicados (`getAllProjects()`). Con 0 no se pinta.
+4. `ProcessSection` — scrollytelling oscuro anclado en `#process`.
+5. `HomeCustomBuilt` — plantilla frente a medida.
+6. `HomeYouEdit` — panel de edición en CSS; enlace a `/services#development`.
+7. `HomeMotto` — lema (`about-page.motto`, o `messages` si está vacío) e ilustración.
+8. `CtaBand` — banda clara hacia `/start`.
 
-Nav fija (`SiteNav`): Trabajo → `/work`, Servicios → `/services`, Proceso → `/#process`, Nosotros → `/about`, CTA “Empezar un proyecto” → `/start`. El CTA de la nav aparece cuando el CTA del hero sale de vista. Al llegar al footer la nav se oculta.
+`HomeStats` no se monta. `settings.stats` sigue en el CMS y en el fallback de `getSettings`.
+
+Nav fija (`SiteNav`): Trabajo → `/work`, Servicios → `/services`, Proceso → `/#process`, Nosotros → `/about`, CTA “Empezar un proyecto” → `/start`. El CTA de la nav aparece cuando el CTA del hero (`data-nav-cta`) sale de vista, y no se muestra en `/start`. Al llegar al footer la nav se oculta. La píldora es crema translúcida (`bg-bg/80`), con blur y borde `lilac/30`.
 
 | Ruta | Qué es |
 | --- | --- |
@@ -36,7 +40,7 @@ Nav fija (`SiteNav`): Trabajo → `/work`, Servicios → `/services`, Proceso �
 | `/work` | Archivo de proyectos `published`. |
 | `/work/[slug]` | Caso de estudio. |
 | `/services` | Listado de servicios. |
-| `/about` | Página del estudio (hero, fundador, misión, valores, cifras). |
+| `/about` | Página del estudio (hero, fundador, misión, valores). Las cifras (`about-page.numbers`) no se pintan hasta que haya datos verificables. |
 | `/process` | Solo redirige a `/#process` (o `/en#process`, `/fr#process`). El proceso no es una página larga propia. |
 | `/start` | Formulario de brief. POST a `/api/leads`. |
 | `/privacy`, `/terms`, `/cookies` | Legales desde la collection `pages`. |
@@ -72,10 +76,10 @@ Config: `src/payload.config.ts`. Secret: `PAYLOAD_SECRET`. DB: `DATABASE_URI`, c
 ### Globals (grupo Sitio, salvo settings)
 
 - **`settings`** — voz `company` | `person`, nombre, tagline, stats de la home, email de notificación de leads, rol, timezone, ubicación, email público, URL canónica sin barra final, hero (legado; la home viva lee `home-page`), contacto, redes. Update solo admin.
-- **`home-page`** — eyebrow, titular (líneas + palabra en itálica), intro, notas flotantes, teasers de servicios y trabajo.
-- **`services-page`** — titular + array `items` (slug, title, subtitle, body, bullets, `illustration` como clave de archivo, order).
+- **`home-page`** — eyebrow, titular (líneas + palabra en itálica), intro, pastilla opcional (`showAvailability` + `availabilityLabel` localizado), notas flotantes (siguen en el schema; la home no las pinta), teasers de servicios y trabajo. El titular de trabajo de la home sale de `workTeaser` (se edita en el admin).
+- **`services-page`** — titular + array `items` (slug, title, subtitle, body, bullets, `illustration` como clave de `ServiceIllustration`: `web-design`, `development`, `ecommerce`, `digital-presence`, order).
 - **`process-page`** — titular de la sección y de 3 a 7 pasos. Cada paso: number, title, body (≤220), `mediaType` `image` | `video` | `lottie`, upload `media`, icono de reserva, CTA opcional. El orden del array es el orden en pantalla.
-- **`about-page`** — eyebrow, hero, founder, mission, values, numbers, imagen de cifras.
+- **`about-page`** — eyebrow, `motto` localizado (visible en la home; si está vacío se usa `home.motto` de `messages`), hero, founder, mission, values, numbers (no se renderizan hasta tener datos verificables), imagen de cifras.
 
 Tras cambiar el schema: `npm run generate:types` y commitear `src/types/payload-types.ts`.
 
@@ -101,18 +105,91 @@ Código en `src/components/process/`. `ProcessSection` (server) lee `getProcessC
 
 - Sin media en un paso, el frente usa `/public/process/step-1.svg` … `step-5.svg`.
 - `mediaType: "lottie"` existe en el modelo. El reproductor no está instalado: ese paso muestra un recuadro de reserva.
-- Constantes de layout y de la barra de progreso (rosa → azul): `src/components/process/constants.ts`.
+- Contenedor `max-w-6xl`, igual que el resto del sitio. En desktop las columnas son 5/7 (`PROCESS_LAYOUT.columnSplit: "wide-media"` en `src/components/process/constants.ts`). Cada panel es `aspect-[4/3]` con tope `max-h-[60vh]`.
+- La barra de progreso es Teal → Violet (`--process-progress` en `globals.css`). `constants.ts` solo la referencia.
+- Los PNG de los pasos viven en el CMS y conservan el color anterior. No se recolorean desde código.
 - Detalle de edición: `src/components/process/README.md`.
 
 ## Diseño y motion
 
-Tokens y utilities en `src/app/(frontend)/globals.css`: `label`, `serif-display`, `btn-primary`, `btn-outline`, `.site-shell`, `.nav-link`, `.rich-text`. Acento de marca en UI es el negro del texto, no un naranja. La única barra de color fuerte es el progreso del proceso.
+El acento de acción es Violet. El negro del texto es Shadow Grey (`ink`), no un segundo acento. La barra del proceso (Teal → Violet) es la única barra de color fuerte; el resto del color vive en botones, links, foco y detalles.
+
+### Paleta y tokens
+
+Hex canónicos solo en `:root` de `src/app/(frontend)/globals.css`. Las imágenes OG repiten esos valores en `src/lib/og-palette.ts` (Satori no resuelve variables CSS). Los SVG de proceso y las banderas (`public/brand/flags/`) llevan su propio hex. `--mask-solid: #000` es una máscara, no un color de marca.
+
+| Token | Valor | Rol |
+| --- | --- | --- |
+| `ink` / `dark` | `#2c2c34` | Texto principal y láminas (proceso, footer) |
+| `brand` | `#8236d3` | Acción: CTAs, links, foco, la palabra "crecer." |
+| `brand-hover` | `brand` al 86 % + `ink` | Hover del botón sólido |
+| `brand-soft` | `brand` al 10 % + crema | Tintes, selección, cierre de ficha |
+| `teal` | `#51a3a3` | Acento frío: iconos, checks, estado ok |
+| `teal-soft` | `teal` al 14 % + crema | Chips |
+| `apricot` | `#f9c784` | Acento cálido: notas, email del footer, botón sobre oscuro |
+| `apricot-soft` | `apricot` al 22 % + crema | Badges |
+| `lilac` | `#978897` | Bordes y divisores (~30–50 %). Nunca texto pequeño sobre crema |
+| `muted` | `ink` al 65 % + crema, en oklab | Texto secundario |
+| `surface` | `#ffffff` | Cards |
+| `dark-raised` | `dark` al 88 % + blanco | Wordmark y paneles del proceso |
+| `error` | `#c62828` al 88 % + `ink` | Errores del formulario |
+
+Las mezclas usan `color-mix(in oklab, …)`. Los alias viejos (`--fg`, `--muted`, `--faint`, `--line`, `--footer-bg`, `--footer-fg`, `--color-accent`) apuntan a estos tokens.
+
+Reparto **60 / 25 / 10 / 5**: ~60 % crema y neutros, ~25 % Shadow Grey, ~10 % Violet (solo acción), ~5 % Teal y Apricot. **Máximo dos acentos por vista**; Teal y Apricot no compiten en el mismo bloque. Teal y Lilac no sirven como texto pequeño sobre crema (quedan por debajo de 4.5:1): van en rellenos, bordes e iconos, con texto `ink` encima cuando hay que leer. El color va en la luz (auroras al 10–18 %, resplandor de la banda), no en bloques de sección. Una sola palabra con degradado en todo el sitio: "crecer." del hero (`text-gradient-brand`, color de reserva `--color-brand`). En los demás titulares la itálica es Violet sólido. Grano estático ≤ 4 % (`grain-overlay`).
+
+Utilidades: `label`, `serif-display`, `btn-primary` (Violet, texto blanco), `btn-outline`, `btn-on-dark` (Apricot + `ink`), `.site-shell`, `.nav-link` (activo y hover en Violet, con indicador), `.rich-text` (links Violet, `blockquote` con borde Teal, `mark` en `apricot-soft`), `card-layered`, `aurora-bg`, `hero-aurora-bg`, `text-gradient-brand`, `cta-glow`. `::selection` usa `brand-soft` / `ink`. `:focus-visible` es un anillo `brand` con offset.
+
+### Hero
+
+`HomeHero` es un server component. El titular y la intro salen en el HTML, sin opacidad inicial: el titular es el LCP. El bloque de CTAs lleva `data-nav-cta` para el observer de la nav. `HeroScene` es client, `aria-hidden`, sin datos de Payload y sin imágenes: tres ventanas en JSX (landing al centro, inventario a la izquierda, tienda o menú a la derecha), tarjetas "Paleta" y "Tipografía", y una nota adhesiva Apricot. Por debajo de 768 px se ve una ventana y otra asomando, como mucho dos tarjetas, sin flotación. El escenario crece con las ventanas (no las recorta) y, debajo, una franja deja que la aurora se apague sobre el crema antes de la sección siguiente.
+
+La animación usa solo `transform` y `opacity`: entrada en cascada, bucles de ~7 s pausados fuera del viewport, tilt con puntero solo en `(hover: hover) and (pointer: fine)`, y un parallax leve al salir. Con `prefers-reduced-motion: reduce` la composición queda completa y quieta (nota, tarjetas y subrayado visibles; sin pulso, tilt ni parallax).
+
+La pastilla "Aceptando nuevos proyectos" solo se pinta si `home-page.showAvailability` está activo. El texto es `availabilityLabel` o, si viene vacío, `home.hero.availabilityDefault`.
+
+### Mapa de CTAs
+
+Botón sólido (`.btn-primary`) en la nav, el hero y la banda de cierre. Continuar y enviar en `/start` también son `.btn-primary`: es el envío del brief, no un CTA de navegación. Todo lo demás son enlaces de texto. Flecha `→` (`ArrowRight`) en navegación interna; `↗` (`ArrowUpRight`) solo en enlaces externos.
+
+- **Banda** (`CtaBand`): clara, borde `lilac/30`, resplandor Violet/Teal (`cta-glow`). El botón dice "Hablemos de tu proyecto" (`cta.talk`), distinto del de la nav y el hero.
+- **Footer:** sin botón. El bloque es "¿Prefieres escribirnos?" más un `mailto:` con `settings.email`. El layout lo pasa como prop `publicEmail`; no existe un campo `publicEmail`. Links en lila claro (`footer-link`), hover Apricot. El email va en Apricot. Las redes, si el CMS trae alguna, son enlaces pequeños en la fila inferior, con `↗`. Abajo, el wordmark "WC Digital" en Playfair, color `dark-raised`, `aria-hidden`. El alto sale del padding (no de un `min-height`) y no puede pasar de `100svh`; por debajo de 700 px de alto el wordmark se oculta. `FooterReveal` no cambia: mide el footer y escribe `--footer-height`, que es el `margin-bottom` del shell.
+- **`/services`:** cada servicio enlaza con texto "Empezar con {servicio} →" y conserva `?service=`.
+- **Ficha** (`/work/[slug]`): el cierre es una banda `brand-soft` con el enlace de texto "Cuéntanos tu proyecto →". No usa `CtaBand`.
+- **`/start`:** la nav no muestra su CTA (escritorio ni menú). El footer no tiene botón que repetir.
+
+### ShareButton
+
+`src/components/share-button.tsx` es client y no tiene dependencias. Props: `url` (absoluta, armada en servidor con `canonicalLocalizedUrl`: origen de `settings.url` + `localizedPath`; el componente no lee `window.location`), `title`, `text`, `kind` (`"project"` | `"site"`) y `appearance` (`"button"` | `"link"`, por defecto botón outline).
+
+En táctil (`(hover: none) and (pointer: coarse)`) llama a `navigator.share` con url, title y text. En escritorio abre un popover con "Copiar enlace" y "Enviar por email". Esc y un clic fuera lo cierran. Una región `aria-live="polite"` anuncia "Enlace copiado". Si no hay `clipboard`, selecciona la URL canónica. El foco vuelve al botón al cerrar con Esc.
+
+Ubicaciones: la ficha ("Compartir proyecto", junto a "Visitar sitio"), el éxito de `/start` (comparte la home, no `/start`) y la fila inferior del footer ("Compartir este sitio", `appearance="link"`).
+
+### Excepciones aprobadas
+
+Quedaron cerradas en `docs/plans/cambio-de-tema/plan-de-implementacion.md` (sección 2). No las reabras.
+
+1. Pastilla de disponibilidad: opcional y editable (`showAvailability` + `availabilityLabel`).
+2. Lema: campo `motto` localizado en `about-page`, con fallback a `messages`.
+3. Flechas: `→` interno, `↗` solo externo.
+4. Cierre de la ficha: banda `brand-soft` con enlace de texto, no el botón de la banda general.
+5. **"Visitar sitio"** en la ficha es botón sólido Violet. Es la acción principal de esa página y abre un sitio externo.
+6. Redes del footer en la fila inferior, como enlaces pequeños.
+7. "Compartir este sitio" va en el footer.
+8. La home siempre usa `CollaborationIllustration`. La foto del fundador solo se pinta en `/about`.
+9. Las cifras de `/about` permanecen ocultas mientras no haya datos verificables. El campo del CMS no se borra.
+10. El titular de trabajo reciente se edita en `home-page.workTeaser`. El fallback de código solo entra si el campo está vacío.
+11. El proceso quedó en columnas 5/7 (también se probó 50/50).
+12. El footer lleva el wordmark gigante en `dark-raised`.
+
+El hero de `/about` sigue siendo un `.btn-primary` hacia `/start`, con `→`. El botón sólido de marketing, fuera de ese caso, queda en la nav, el hero y la banda.
 
 Motion degrada con `prefers-reduced-motion` (CSS global + `MotionProvider`). No hay smooth-scroll ni scroll hijacking fuera del scrollytelling del proceso, que es scroll nativo con paneles sticky.
 
-Componentes de shell vivos: `site-nav`, `site-footer`, `footer-reveal`, `language-modal`, `home/*`, `work/work-showcase`, `device-mockup`, `cta-band`, `start-project-form`, `rich-text`, `process/*`.
+Componentes de shell vivos: `site-nav`, `site-footer`, `footer-reveal`, `language-modal`, `locale-control`, `share-button`, `collaboration-illustration`, `service-illustration`, `home/*` (incluye `hero-scene`, `home-custom-built`, `home-you-edit`, `edit-panel-mockup`, `home-motto`), `work/work-showcase`, `device-mockup`, `cta-band`, `start-project-form`, `rich-text`, `process/*`.
 
-Quedan piezas del portfolio oscuro anterior (`nav.tsx`, `hero.tsx`, `footer.tsx`, `contact.tsx`, `theme-toggle.tsx`, `mdx.tsx`) que el App Router actual no monta. No las revivas ni las uses como referencia visual.
+Quedan piezas del portfolio oscuro anterior (`nav.tsx`, `hero.tsx`, `footer.tsx`, `contact.tsx`, `theme-toggle.tsx`, `mdx.tsx`) que el App Router actual no monta. No las revivas ni las uses como referencia visual. `home-stats.tsx` tampoco se monta.
 
 ## Estructura
 

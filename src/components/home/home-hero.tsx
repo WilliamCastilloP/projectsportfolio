@@ -14,7 +14,7 @@ export async function HomeHero({ content }: { content: HomeContent }) {
     content.availabilityLabel.trim() || tHero("availabilityDefault");
 
   return (
-    <section className="relative isolate -mt-20 pt-20 sm:-mt-24 sm:pt-24 max-md:max-h-[100svh] max-md:overflow-x-clip">
+    <section className="relative isolate -mt-20 overflow-x-clip pt-20 sm:-mt-24 sm:pt-24">
       <div className="hero-aurora-bg pointer-events-none absolute inset-0" aria-hidden />
       <div className="grain-overlay" aria-hidden>
         <svg className="h-full w-full">
@@ -71,7 +71,11 @@ export async function HomeHero({ content }: { content: HomeContent }) {
         <HeroScene />
       </div>
 
-      <div className="mx-auto max-w-3xl px-5 sm:px-8 md:max-w-4xl">
+      <div className="relative mx-auto max-w-3xl px-5 pb-20 pt-4 sm:px-8 md:max-w-4xl md:pb-16">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-bg"
+        />
         <HeroScrollIndicator label={tHero("scrollIndicator")} />
       </div>
     </section>

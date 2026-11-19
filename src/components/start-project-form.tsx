@@ -3,7 +3,7 @@
 import { useMemo, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { ArrowUpRight } from "@/components/arrow-icon";
+import { ArrowRight } from "@/components/arrow-icon";
 import { ShareButton } from "@/components/share-button";
 import { cn } from "@/lib/cn";
 
@@ -251,7 +251,7 @@ export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProje
             disabled={pending || !form.name || !form.email || !form.timeline || !form.stage}
             className="btn-primary text-sm disabled:opacity-50"
           >
-            {t("submit")} <ArrowUpRight />
+            {t("submit")} <ArrowRight />
           </button>
         )}
       </div>

@@ -722,7 +722,7 @@ export interface ServicesPage {
         body: string;
         bullets?: string[] | null;
         /**
-         * Clave en /public/illustrations/services/
+         * Clave de ilustración: web-design, development, ecommerce, digital-presence.
          */
         illustration?: string | null;
         order?: number | null;

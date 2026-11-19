@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ArrowUpRight } from "@/components/arrow-icon";
+import { ArrowRight } from "@/components/arrow-icon";
 import { DeviceMockup } from "@/components/device-mockup";
 import { cn } from "@/lib/cn";
 import type { Project, ProjectCategory } from "@/types/project";
@@ -75,7 +75,7 @@ export function WorkShowcase({ projects }: { projects: Project[] }) {
                 href={`/work/${project.slug}`}
                 className="mt-6 inline-flex items-center text-sm font-medium text-brand underline decoration-brand/40 underline-offset-4 transition-colors hover:decoration-brand"
               >
-                {t("viewProject")} <ArrowUpRight className="ml-1" />
+                {t("viewProject")} <ArrowRight className="ml-1" />
               </Link>
             </div>
           </article>

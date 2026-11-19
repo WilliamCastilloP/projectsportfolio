@@ -40,7 +40,7 @@ export function ProcessPanel({
       )}
     >
       <div className="mb-4 lg:mb-0">
-        <p className="label text-white/45 lg:sr-only">{step.number}</p>
+        <p className="label text-white/50 lg:sr-only">{step.number}</p>
         <h3 className="mt-1 text-2xl text-white lg:sr-only">{step.title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-white/70 lg:sr-only">{step.body}</p>
         {step.cta ? (

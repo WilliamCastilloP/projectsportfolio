@@ -105,7 +105,7 @@ export function ProcessScrollytelling({ content }: { content: ProcessContent }) 
         )}
       >
         <aside className="hidden self-start lg:sticky lg:top-[var(--process-sticky)] lg:block lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
-          <p className="label text-white/45">{content.eyebrow}</p>
+          <p className="label text-white/50">{content.eyebrow}</p>
           <h2 className="mt-3 serif-display text-title text-balance">
             {content.title} {content.emphasis ? <span className="italic">{content.emphasis}</span> : null}
           </h2>
@@ -125,7 +125,7 @@ export function ProcessScrollytelling({ content }: { content: ProcessContent }) 
         </aside>
         <div className="flex flex-col gap-6">
           <div className="mb-2 lg:hidden">
-            <p className="label text-white/45">{content.eyebrow}</p>
+            <p className="label text-white/50">{content.eyebrow}</p>
             <h2 className="mt-3 serif-display text-3xl text-balance">
               {content.title} {content.emphasis ? <span className="italic">{content.emphasis}</span> : null}
             </h2>

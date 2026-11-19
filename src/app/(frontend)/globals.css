@@ -83,7 +83,8 @@
     /* Reapunte de tokens legacy */
     --fg: var(--ink);
     --muted: color-mix(in oklab, var(--ink) 65%, var(--bg));
-    --faint: color-mix(in oklab, var(--ink) 42%, var(--bg));
+    /* 64 %: las cejas de 11 px necesitan ≥ 4.5:1 sobre crema (~4.7:1). */
+    --faint: color-mix(in oklab, var(--ink) 64%, var(--bg));
     --line: color-mix(in oklab, var(--lilac) 32%, var(--bg));
     --footer-bg: var(--dark);
     --footer-fg: var(--bg);

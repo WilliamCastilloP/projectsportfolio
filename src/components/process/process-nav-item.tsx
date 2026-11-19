@@ -54,7 +54,7 @@ export function ProcessNavItem({
           "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand",
         )}
       >
-        <span className={cn("label", active ? "text-teal" : "text-white/45")}>{step.number}</span>
+        <span className={cn("label", active ? "text-teal" : "text-white/50")}>{step.number}</span>
         <span className={cn("mt-1 block text-lg", active ? "text-white" : "text-white/55")}>{step.title}</span>
         <div
           className={cn(

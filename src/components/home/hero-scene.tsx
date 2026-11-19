@@ -390,7 +390,7 @@ export function HeroScene() {
         className="pointer-events-none relative mx-auto w-full select-none"
         style={tiltOn ? { rotateX: tiltX, rotateY: tiltY, transformPerspective: 1000 } : undefined}
       >
-        <div className="relative mx-auto h-[260px] max-md:max-h-[min(286px,38svh)] sm:h-[340px] md:h-[420px] lg:h-[470px]">
+        <div className="relative mx-auto h-auto md:h-[420px] lg:h-[470px]">
         <WindowLayer
           enterIndex={0}
           baseRotate={-4}
@@ -419,7 +419,7 @@ export function HeroScene() {
           reduced={reduced}
           scrollY={landY}
           pointerX={ptrLandX}
-          className="absolute left-1/2 top-0 z-20 w-[min(54%,460px)] -translate-x-1/2 sm:w-[min(52%,480px)] md:w-[min(48%,500px)]"
+          className="relative z-20 mx-auto w-[min(72%,20.5rem)] md:absolute md:left-1/2 md:top-0 md:mx-0 md:w-[min(48%,500px)] md:-translate-x-1/2"
         >
           <LandingWindow live={live} />
         </WindowLayer>

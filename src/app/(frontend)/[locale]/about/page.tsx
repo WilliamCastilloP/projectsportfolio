@@ -2,7 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { CtaBand } from "@/components/cta-band";
-import { ArrowUpRight } from "@/components/arrow-icon";
+import { ArrowRight } from "@/components/arrow-icon";
 import { ValueIcon } from "@/components/value-icon";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/cn";
@@ -42,7 +42,7 @@ export default async function AboutPage() {
           </h1>
           <p className="mt-6 text-muted">{about.hero.body || t("fallbackIntro")}</p>
           <Link href="/start" className="btn-primary mt-8 inline-flex">
-            {t("start")} <ArrowUpRight />
+            {t("start")} <ArrowRight />
           </Link>
         </div>
         {about.hero.image ? (
