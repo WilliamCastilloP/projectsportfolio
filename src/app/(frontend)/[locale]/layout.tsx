@@ -8,6 +8,7 @@ import { MotionProvider } from "@/components/motion-provider";
 import { FooterReveal } from "@/components/footer-reveal";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
+import { canonicalLocalizedUrl } from "@/i18n/path";
 import { routing, type Locale } from "@/i18n/routing";
 import { getSettings } from "@/lib/site";
 
@@ -30,10 +31,11 @@ export default async function LocaleLayout({
   const loc = locale as Locale;
   const jar = await cookies();
   const showLanguageModal = !jar.has("wc-locale") && !jar.has("wc-locale-modal-dismissed");
-  const [settings, messages, t] = await Promise.all([
+  const [settings, messages, t, share] = await Promise.all([
     getSettings(loc),
     getMessages(),
     getTranslations("a11y"),
+    getTranslations("share"),
   ]);
 
   return (
@@ -58,6 +60,9 @@ export default async function LocaleLayout({
           tagline={settings.tagline}
           publicEmail={settings.email}
           socials={settings.socials}
+          shareUrl={canonicalLocalizedUrl(settings.url, "/", loc)}
+          shareTitle={settings.name}
+          shareText={settings.tagline || share("invite")}
         />
       </FooterReveal>
     </NextIntlClientProvider>

@@ -2,8 +2,10 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { StartProjectForm } from "@/components/start-project-form";
-import { languageAlternates } from "@/i18n/path";
+import { canonicalLocalizedUrl, languageAlternates } from "@/i18n/path";
+import type { Locale } from "@/i18n/routing";
 import { pageOpenGraph } from "@/lib/metadata";
+import { getSettings } from "@/lib/site";
 
 export async function generateMetadata(
   _props: PageProps<"/[locale]/start">,
@@ -18,8 +20,15 @@ export async function generateMetadata(
   };
 }
 
-export default async function StartPage() {
-  const t = await getTranslations("start");
+export default async function StartPage({ params }: PageProps<"/[locale]/start">) {
+  const { locale } = await params;
+  const loc = locale as Locale;
+  const [t, share, settings] = await Promise.all([
+    getTranslations("start"),
+    getTranslations("share"),
+    getSettings(loc),
+  ]);
+  const shareUrl = canonicalLocalizedUrl(settings.url, "/", loc);
 
   return (
     <section className="mx-auto grid max-w-6xl gap-12 px-5 pb-16 pt-8 sm:px-8 sm:pb-24 sm:pt-10 lg:grid-cols-2">
@@ -37,7 +46,11 @@ export default async function StartPage() {
         </ul>
       </div>
       <Suspense fallback={<div className="h-96 animate-pulse rounded-3xl bg-elevated" />}>
-        <StartProjectForm />
+        <StartProjectForm
+          shareUrl={shareUrl}
+          shareTitle={settings.name}
+          shareText={share("invite")}
+        />
       </Suspense>
     </section>
   );

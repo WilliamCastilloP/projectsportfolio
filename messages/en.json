@@ -211,6 +211,17 @@
     "cookies": "Cookie policy",
     "empty": "Content coming soon."
   },
+  "share": {
+    "project": "Share project",
+    "site": "Share this site",
+    "copy": "Copy link",
+    "copied": "Link copied",
+    "email": "Send by email",
+    "emailSubject": "Sharing {title}",
+    "emailBody": "{text}\n\n{url}",
+    "error": "Couldn't share this. Try copying the link.",
+    "invite": "Know someone who needs a site? Share WC Digital."
+  },
   "notFound": {
     "label": "Not found",
     "title": "This page doesn't exist.",

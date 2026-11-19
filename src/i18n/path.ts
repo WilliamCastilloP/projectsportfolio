@@ -6,6 +6,12 @@ export function localizedPath(pathname: string, locale: Locale) {
   return path === "/" ? `/${locale}` : `/${locale}${path}`;
 }
 
+/** Absolute public URL: canonical origin + locale prefix. */
+export function canonicalLocalizedUrl(origin: string, pathname: string, locale: Locale) {
+  const base = origin.replace(/\/$/, "");
+  return `${base}${localizedPath(pathname, locale)}`;
+}
+
 export function languageAlternates(pathname = "/") {
   return {
     es: localizedPath(pathname, "es"),

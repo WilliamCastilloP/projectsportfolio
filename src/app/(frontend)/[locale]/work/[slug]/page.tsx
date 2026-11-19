@@ -4,11 +4,14 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { DeviceMockup } from "@/components/device-mockup";
 import { RichText } from "@/components/rich-text";
+import { ShareButton } from "@/components/share-button";
 import { ArrowRight, ArrowUpRight } from "@/components/arrow-icon";
 import { Link } from "@/i18n/navigation";
-import { languageAlternates } from "@/i18n/path";
+import { canonicalLocalizedUrl, languageAlternates } from "@/i18n/path";
+import type { Locale } from "@/i18n/routing";
 import { pageOpenGraph } from "@/lib/metadata";
 import { getProject } from "@/lib/projects";
+import { getSettings } from "@/lib/site";
 
 export const dynamicParams = true;
 
@@ -49,11 +52,16 @@ function DeliverableList({ items }: { items: string[] }) {
 }
 
 export default async function CaseStudyPage({ params }: PageProps<"/[locale]/work/[slug]">) {
-  const { slug } = await params;
-  const project = await getProject(slug);
+  const { slug, locale } = await params;
+  const loc = locale as Locale;
+  const [project, t, settings] = await Promise.all([
+    getProject(slug),
+    getTranslations("work"),
+    getSettings(loc),
+  ]);
   if (!project) notFound();
 
-  const t = await getTranslations("work");
+  const shareUrl = canonicalLocalizedUrl(settings.url, `/work/${project.slug}`, loc);
 
   const meta = [
     { label: t("client"), value: project.client },
@@ -76,11 +84,19 @@ export default async function CaseStudyPage({ params }: PageProps<"/[locale]/wor
           {project.title}
         </h1>
         <p className="mt-4 max-w-2xl text-muted">{project.description}</p>
-        {project.liveUrl ? (
-          <a href={project.liveUrl} target="_blank" rel="noreferrer" className="btn-primary mt-6 inline-flex">
-            {project.liveLabel || t("live")} <ArrowUpRight />
-          </a>
-        ) : null}
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          {project.liveUrl ? (
+            <a href={project.liveUrl} target="_blank" rel="noreferrer" className="btn-primary inline-flex">
+              {project.liveLabel || t("live")} <ArrowUpRight />
+            </a>
+          ) : null}
+          <ShareButton
+            kind="project"
+            url={shareUrl}
+            title={project.title}
+            text={project.description || project.title}
+          />
+        </div>
 
         <div className="mt-12">
           <DeviceMockup

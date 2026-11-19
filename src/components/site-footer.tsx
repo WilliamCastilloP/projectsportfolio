@@ -2,15 +2,27 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "@/components/arrow-icon";
 import { LocaleControl } from "@/components/locale-control";
+import { ShareButton } from "@/components/share-button";
 
 type SiteFooterProps = {
   name: string;
   tagline: string;
   publicEmail: string;
   socials: { label: string; href: string }[];
+  shareUrl: string;
+  shareTitle: string;
+  shareText: string;
 };
 
-export async function SiteFooter({ name, tagline, publicEmail, socials }: SiteFooterProps) {
+export async function SiteFooter({
+  name,
+  tagline,
+  publicEmail,
+  socials,
+  shareUrl,
+  shareTitle,
+  shareText,
+}: SiteFooterProps) {
   const t = await getTranslations("footer");
 
   const links = [
@@ -83,6 +95,7 @@ export async function SiteFooter({ name, tagline, publicEmail, socials }: SiteFo
               </span>
             ))}
           </p>
+          <ShareButton appearance="link" kind="site" url={shareUrl} title={shareTitle} text={shareText} />
           {socials.length > 0 ? (
             <p className="flex flex-wrap items-center gap-x-3 gap-y-1 sm:ml-auto">
               {socials.map((s) => (

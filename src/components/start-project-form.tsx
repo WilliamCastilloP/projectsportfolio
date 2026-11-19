@@ -4,7 +4,14 @@ import { useMemo, useState, useTransition } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { ArrowUpRight } from "@/components/arrow-icon";
+import { ShareButton } from "@/components/share-button";
 import { cn } from "@/lib/cn";
+
+type StartProjectFormProps = {
+  shareUrl: string;
+  shareTitle: string;
+  shareText: string;
+};
 
 type FormState = {
   projectType: string;
@@ -20,7 +27,7 @@ const projectTypes = ["new-website", "redesign", "ecommerce", "other"] as const;
 const stages = ["idea", "ready", "existing"] as const;
 const timelines = ["asap", "1-3", "3-6", "6plus"] as const;
 
-export function StartProjectForm() {
+export function StartProjectForm({ shareUrl, shareTitle, shareText }: StartProjectFormProps) {
   const t = useTranslations("start");
   const locale = useLocale();
   const searchParams = useSearchParams();
@@ -79,6 +86,10 @@ export function StartProjectForm() {
       <div className="rounded-3xl border border-line bg-surface p-8 text-center">
         <h2 className="serif-display text-2xl">{t("successTitle")}</h2>
         <p className="mt-3 text-muted">{t("successBody")}</p>
+        <div className="mt-8 flex flex-col items-center gap-4">
+          <p className="max-w-sm text-sm text-balance text-fg">{shareText}</p>
+          <ShareButton kind="site" url={shareUrl} title={shareTitle} text={shareText} />
+        </div>
       </div>
     );
   }

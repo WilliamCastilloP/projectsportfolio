@@ -211,6 +211,17 @@
     "cookies": "Política de cookies",
     "empty": "Contenido disponible pronto."
   },
+  "share": {
+    "project": "Compartir proyecto",
+    "site": "Compartir este sitio",
+    "copy": "Copiar enlace",
+    "copied": "Enlace copiado",
+    "email": "Enviar por email",
+    "emailSubject": "Te comparto {title}",
+    "emailBody": "{text}\n\n{url}",
+    "error": "No se pudo compartir. Prueba a copiar el enlace.",
+    "invite": "¿Conoces a alguien que necesite un sitio? Comparte WC Digital."
+  },
   "notFound": {
     "label": "No encontrada",
     "title": "Esta página no existe.",
